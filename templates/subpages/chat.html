@@ -71,7 +71,7 @@
       var url = 'http://' + document.domain + ':' + location.port
       var socket = io.connect(url)
       console.log('1 연결');
-    
+    })
     // 2. 접속 후 닉네임 입력 이벤트 구현
     socket.on('connect', (evt) => {
         user_name = encodeURI(prompt('닉네임을 입력하세요.'));
@@ -95,7 +95,7 @@
           <img class="direct-chat-img" src="static/dist/img/PusanLogo.jpg" alt="message user image">
           <div class="direct-chat-text">${msg}</div>
           </div>`
-        }
+        }})
     // 3. 서버 사이드 메시지 발송 시 수신
       socket.on('server_send_msg', (data) => {
         var sender =decodeURI(data.user);
@@ -136,7 +136,7 @@
           <img class="direct-chat-img" src="static/dist/img/unknown.png" alt="message user image">
           <div class="direct-chat-text">${msg}</div>
           </div>`
-          }}
+          }};
           $('#chat_body').append( msghtml ).stop().animate( {
             scrollTop:$('#chat_body')[0].scrollHeight
         }, 1000)
@@ -152,9 +152,5 @@
           socket.emit('client_send_msg',{'client_name':user_name,'client_msg':client_msg})
           $('[name=message]').val('')
         })
-        });
-
-  
   </script>
-
-</div>
+      </div>
