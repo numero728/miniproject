@@ -7,7 +7,7 @@
         <section class="col-lg-7 connectedSortable">
           <div class="card direct-chat direct-chat-primary">
             <div class="card-header">
-              <h3 class="card-title">토론방</h3>
+              <h3 class="card-title" id='card_title'>토론방</h3>
               <div class="card-tools">
                 <span title="Current_user" class="badge badge-primary"></span>
 
@@ -19,103 +19,36 @@
             </div>
             <div class="card-body">
 
+              <div class="direct-chat-messages" id='chat_body'>
+              </div>
 
               <div class="direct-chat-contacts">
-                <ul class="contacts-list">
-                  <li>
-                    <a href="#">
-                      <img class="contacts-list-img" src="static/dist/img/user1-128x128.jpg" alt="User Avatar">
-
-                      <div class="contacts-list-info">
-                        <span class="contacts-list-name">
-                          Count Dracula
-                          <small class="contacts-list-date float-right">2/28/2015</small>
-                        </span>
-                        <span class="contacts-list-msg">How have you been? I was...</span>
-                      </div>
-                      <!-- /.contacts-list-info -->
-                    </a>
-                  </li>
-                  <!-- End Contact Item -->
-                  <li>
-                    <a href="#">
-                      <img class="contacts-list-img" src="static/dist/img/user7-128x128.jpg" alt="User Avatar">
-
-                      <div class="contacts-list-info">
-                        <span class="contacts-list-name">
-                          Sarah Doe
-                          <small class="contacts-list-date float-right">2/23/2015</small>
-                        </span>
-                        <span class="contacts-list-msg">I will be waiting for...</span>
-                      </div>
-                      <!-- /.contacts-list-info -->
-                    </a>
-                  </li>
-                  <!-- End Contact Item -->
-                  <li>
-                    <a href="#">
-                      <img class="contacts-list-img" src="static/dist/img/user3-128x128.jpg" alt="User Avatar">
-
-                      <div class="contacts-list-info">
-                        <span class="contacts-list-name">
-                          Nadia Jolie
-                          <small class="contacts-list-date float-right">2/20/2015</small>
-                        </span>
-                        <span class="contacts-list-msg">I'll call you back at...</span>
-                      </div>
-                      <!-- /.contacts-list-info -->
-                    </a>
-                  </li>
-                  <!-- End Contact Item -->
-                  <li>
-                    <a href="#">
-                      <img class="contacts-list-img" src="static/dist/img/user5-128x128.jpg" alt="User Avatar">
-
-                      <div class="contacts-list-info">
-                        <span class="contacts-list-name">
-                          Nora S. Vans
-                          <small class="contacts-list-date float-right">2/10/2015</small>
-                        </span>
-                        <span class="contacts-list-msg">Where is your new...</span>
-                      </div>
-                      <!-- /.contacts-list-info -->
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <img class="contacts-list-img" src="static/dist/img/user6-128x128.jpg" alt="User Avatar">
-
-                      <div class="contacts-list-info">
-                        <span class="contacts-list-name">
-                          John K.
-                          <small class="contacts-list-date float-right">1/27/2015</small>
-                        </span>
-                        <span class="contacts-list-msg">Can I take a look at...</span>
-                      </div>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <img class="contacts-list-img" src="static/dist/img/user8-128x128.jpg" alt="User Avatar">
-
-                      <div class="contacts-list-info">
-                        <span class="contacts-list-name">
-                          Kenneth M.
-                          <small class="contacts-list-date float-right">1/4/2015</small>
-                        </span>
-                        <span class="contacts-list-msg">Never mind I found...</span>
-                      </div>
-                    </a>
-                  </li>
-                </ul>
+                  <ul class="contacts-list">
+                      <li>
+                          <a href="#">
+                              <img class="contacts-list-img" href="static/dist/img/user1-128x128.jpg"
+                                  alt="User Avatar">
+        
+                              <div class="contacts-list-info">
+                                  <span class="contacts-list-name">
+                                      Count Dracula
+                                      <small class="contacts-list-date float-right">2/28/2015</small>
+                                  </span>
+                                  <span class="contacts-list-msg">How have you been? I was...</span>
+                              </div>
+                              <!-- /.contacts-list-info -->
+                          </a>
+                      </li>
+                  </ul>
               </div>
-            </div>
+          </div>
             <div class="card-footer">
-              <form action="#" method="post">
+              <form action="#" method="post", id='msg_form'>
                 <div class="input-group">
-                  <input type="text" name="message" placeholder="Type Message ..." class="form-control">
+                  <input type="text" name="message" placeholder="메시지를 입력하세요." class="form-control">
+                  <input type='hidden'/>
                   <span class="input-group-append">
-                    <button type="button" class="btn btn-primary">Send</button>
+                    <button type="button" id='send_btn' class="btn btn-primary">전송</button>
                   </span>
                 </div>
               </form>
@@ -127,31 +60,31 @@
     </div>
   </section>
   <script>
+    // 0. 폼 전송 막기
+    $('#msg_form').on('submit',()=>{
+      return false;
+    })
+
     // 1. 접속 이벤트 구현
     socket=0
     $(document).ready(() => {
       var url = 'http://' + document.domain + ':' + location.port
       var socket = io.connect(url)
       console.log('1 연결');
-
-    // 1.5. 접속 후 현재 접속자 수 확인  
-      var clients=io.socket.clients()
-      var current_user='접속자 수 : '+clients
-      $('[title=Current_user').text=current_user
-      console.log(clients)
-
+    
     // 2. 접속 후 닉네임 입력 이벤트 구현
-      socket.on('connect', (evt) => {
-        console.log('소켓에 접속되었습니다.');
-        user_name = prompt('닉네임을 입력하세요.');
+    socket.on('connect', (evt) => {
+        user_name = encodeURI(prompt('닉네임을 입력하세요.'));
+        
         socket.emit('client_send_name', { 'client_name': user_name })
       })
-    // 3. 서버 사이드 메시지 발송 시 수신
-      socket.on('server_send_msg', (data) => {
-        var sender = data.user;
-        var msg = data.msg;
-        var msghtml=''
-        if (sender === user_name) {
+
+      socket.on('system_msg', (data) => {
+        var sender =decodeURI(data.user);
+        var msg = decodeURI(data.msg);
+        var msghtml='ddd'
+        var stock_code=data.stock_code
+        if (sender != decodeURI(user_name)) {
           var msghtml = 
           `<div class="direct-chat-messages">
           <div class="direct-chat-msg">
@@ -159,21 +92,66 @@
           <span class="direct-chat-name float-left">${sender}</span>
           <span class="direct-chat-timestamp float-right">${new Date()}</span>
           </div>
-          <img class="direct-chat-img" src="static/dist/img/user1-128x128.jpg" alt="message user image">
+          <img class="direct-chat-img" src="static/dist/img/PusanLogo.jpg" alt="message user image">
+          <div class="direct-chat-text">${msg}</div>
+          </div>`
+        }
+    // 3. 서버 사이드 메시지 발송 시 수신
+      socket.on('server_send_msg', (data) => {
+        var sender =decodeURI(data.user);
+        var msg = decodeURI(data.msg);
+        var msghtml='ddd'
+        var stock_code=data.stock_code
+        if (sender != decodeURI(user_name)) {
+          var msghtml = 
+          `<div class="direct-chat-messages">
+          <div class="direct-chat-msg">
+          <div class="direct-chat-infos clearfix">
+          <span class="direct-chat-name float-left">${sender}</span>
+          <span class="direct-chat-timestamp float-right">${new Date()}</span>
+          </div>
+          <img class="direct-chat-img" src="static/dist/img/PusanLogo.jpg" alt="message user image">
           <div class="direct-chat-text">${msg}</div>
           </div>`
         }
         else {
+          if (stock_code!='Null'){
           var msghtml =
           `<div class="direct-chat-msg right">
           <div class="direct-chat-infos clearfix">
           <span class="direct-chat-name float-right">${sender}</span>
           <span class="direct-chat-timestamp float-left">${new Date()}</span>
           </div>
-          <img class="direct-chat-img" src="static/dist/img/user3-128x128.jpg" alt="message user image">
+          <img class="direct-chat-img" src="static/dist/img/unknown.png" alt="message user image">
+          <div class="direct-chat-text"><b style="color:blue;">${stock_code} </b>${msg}</div>
+          </div>`
+          }
+          else{
+            var msghtml =
+          `<div class="direct-chat-msg right">
+          <div class="direct-chat-infos clearfix">
+          <span class="direct-chat-name float-right">${sender}</span>
+          <span class="direct-chat-timestamp float-left">${new Date()}</span>
+          </div>
+          <img class="direct-chat-img" src="static/dist/img/unknown.png" alt="message user image">
           <div class="direct-chat-text">${msg}</div>
           </div>`
-          }})
+          }}
+          $('#chat_body').append( msghtml ).stop().animate( {
+            scrollTop:$('#chat_body')[0].scrollHeight
+        }, 1000)
+        })
+        $('[name=message]').on('keypress',(evt)=>{
+          if(evt.keyCode==13){
+          var client_msg=encodeURI($('[name=message]').val().trim())
+          socket.emit('client_send_msg',{'client_name':user_name,'client_msg':client_msg})
+          $('[name=message]').val('')
+        }})
+        $('#send_btn').on('click',()=>{
+          var client_msg=encodeURI($('[name=message]').val().trim())
+          socket.emit('client_send_msg',{'client_name':user_name,'client_msg':client_msg})
+          $('[name=message]').val('')
+        })
         });
 
   
