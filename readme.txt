@@ -8,3 +8,12 @@
 - key pair 이름: miniproject_key
 - DNS 이름: Configure
 - IP: 40.76.38.92
+
+
+
+# 서버 최초 배포 후 apache2 default page 설정
+# ssh 접속 후
+1) /etc/apache2/sites_available 디렉토리로 이동
+2) sudo a2dissite 000-default.conf
+3) sudo systemctl reload apache2
+
