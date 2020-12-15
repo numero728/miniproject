@@ -94,29 +94,26 @@
       >
         <!-- li는 목록을 표현하는 태크-->
         <li class="nav-item">
-          <a href="/bbs" class="nav-link">
+          <a href="{{url_for('news')}}" class="nav-link">
             <i class="nav-icon fas fa-th"></i>
             <p>
               업종별 뉴스
-              <span class="right badge badge-danger">New</span>
             </p>
           </a>
         </li>
         <li class="nav-item">
-          <a href="/chat" class="nav-link">
-            <i class="nav-icon fas fa-th"></i>
+          <a href="{{url_for('index')}}" class="nav-link">
+            <i class="nav-icon fas fa-chart-bar"></i>
             <p>
               Index
-              <span class="right badge badge-danger">New</span>
             </p>
           </a>
         </li>
         <li class="nav-item">
-          <a href="/upload" class="nav-link">
-            <i class="nav-icon fas fa-th"></i>
+          <a href="{{url_for('chat')}}" class="nav-link">
+            <i class="nav-icon fas fa-comments"></i>
             <p>
               실시간 채팅
-              <span class="right badge badge-danger">New</span>
             </p>
           </a>
         </li>

@@ -17,3 +17,12 @@
 2) sudo a2dissite 000-default.conf
 3) sudo systemctl reload apache2
 
+DB 이름 miniproject
+서버 네임: pnuminiproject.database.windows.net
+서버 어드민" miniproject
+DB PW: pnuproject1234!
+
+
+# 팝업 메뉴 제이쿼리
+https://www.codeproject.com/Tips/1194456/Popup-Menu
+

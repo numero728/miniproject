@@ -1,39 +1,173 @@
 <div class="content-wrapper">
-  {# 모든 콘텐츠의 헤더 파트이고, 현재 페이지가 어디 에 위치해있는지 그 경로를
-  네비게이션하고 있다(모든 페이지는 필수로 유지) #}
-  <div class="content-header">
-    <div class="container-fluid">
-      <div class="row mb-2">
-        <div class="col-sm-6">
-          <h1 class="m-0">실시간 채팅</h1>
-        </div>
-        <!-- /.col -->
-        <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item">
-              <a href="{{ url_for('home') }}">Home</a>
-            </li>
-            <li class="breadcrumb-item active">채팅 v1</li>
-          </ol>
-        </div>
-        <!-- /.col -->
-      </div>
-      <!-- /.row -->
-    </div>
-    <!-- /.container-fluid -->
-  </div>
-
-  <!-- Main content -->
+  {%include 'subpublic/chat_header.html'%}
   <section class="content">
     <div class="container-fluid">
-      {# row 단위로 한줄의 콘텐츠가 생성 #}
-      <div class="row">
-        {# col-lg-숫자(12칸)로 컬럼의 차지하는 크기를 지정 #}
-        <div class="col-lg-12 col-6">{% include "modPages/chat.html" %}</div>
+      <div class="column">
+
+        <section class="col-lg-7 connectedSortable">
+          <div class="card direct-chat direct-chat-primary">
+            <div class="card-header">
+              <h3 class="card-title" id='card_title'>토론방</h3>
+              <div class="card-tools">
+                <span title="Current_user" class="badge badge-primary"></span>
+
+                <button type="button" class="btn btn-tool" title="Contacts" data-widget="chat-pane-toggle">
+                  <i class="fas fa-comments"></i>
+                </button>
+
+              </div>
+            </div>
+            <div class="card-body">
+
+              <div class="direct-chat-messages" id='chat_body'>
+              </div>
+
+              <div class="direct-chat-contacts">
+                  <ul class="contacts-list">
+                      <li>
+                          <a href="#">
+                              <img class="contacts-list-img" href="static/dist/img/user1-128x128.jpg"
+                                  alt="User Avatar">
+        
+                              <div class="contacts-list-info">
+                                  <span class="contacts-list-name">
+                                      Count Dracula
+                                      <small class="contacts-list-date float-right">2/28/2015</small>
+                                  </span>
+                                  <span class="contacts-list-msg">How have you been? I was...</span>
+                              </div>
+                          </a>
+                      </li>
+                  </ul>
+              </div>
+          </div>
+            <div class="card-footer">
+              <form action="#" method="post", id='msg_form'>
+                <div class="input-group">
+                  <input type="text" name="message" placeholder="메시지를 입력하세요." class="form-control">
+                  <input type='hidden'/>
+                  <span class="input-group-append">
+                    <button type="button" id='send_btn' class="btn btn-primary">전송</button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+        </section>
       </div>
     </div>
-    <!-- /.container-fluid -->
   </section>
-  <!-- /.content -->
-</div>
-<!-- /.content-wrapper -->
+  <script>
+    // 0. 폼 전송 막기
+    $('#msg_form').on('submit',()=>{
+      return false;
+    })
+  </script>
+  <script>
+    // 1. 접속 이벤트 구현
+    socket=0
+      var url = 'http://' + document.domain + ':' + location.port
+      var socket = io.connect(url)
+      console.log('1 연결')
+    // 2. 접속 후 닉네임 입력 이벤트 구현
+  </script>
+
+<script>
+
+    socket.on('connect', (evt) => {
+        user_name = encodeURI(prompt('닉네임을 입력하세요.'));
+        
+        socket.emit('client_send_name', { 'client_name': user_name })
+      })
+</script>
+
+
+<script>
+   socket.on('remain',(data)=>{
+     user_name= data.user
+   })
+</script>
+<script>
+      socket.on('system_msg', (data) => {
+        var sender =decodeURI(data.user);
+        var msg = decodeURI(data.msg);
+        var msghtml='ddd'
+        var stock_code=data.stock_code
+        console.log('시스템 메시지 수신')
+          var msghtml = 
+          `<div class="direct-chat-messages">
+          <div class="direct-chat-msg">
+          <div class="direct-chat-infos clearfix">
+          <span class="direct-chat-name float-left">${sender}</span>
+          <span class="direct-chat-timestamp float-right">${new Date()}</span>
+          </div>
+          <img class="direct-chat-img" src="static/dist/img/PusanLogo.jpg" alt="message user image">
+          <div class="direct-chat-text">${msg}</div>
+          </div>`
+          $('#chat_body').append( msghtml ).stop().animate( {
+            scrollTop:$('#chat_body')[0].scrollHeight
+        }, 1000)
+        })
+
+    // 3. 서버 사이드 메시지 발송 시 수신
+      socket.on('server_send_msg', (data) => {
+        var sender =decodeURI(data.user);
+        var msg = decodeURI(data.msg);
+        var msghtml='ddd'
+        var stock_code=data.stock_code
+        console.log('수신 양호')
+        if (sender != decodeURI(user_name)) {
+          var msghtml = 
+          `<div class="direct-chat-messages">
+          <div class="direct-chat-msg">
+          <div class="direct-chat-infos clearfix">
+          <span class="direct-chat-name float-left">${sender}</span>
+          <span class="direct-chat-timestamp float-right">${new Date()}</span>
+          </div>
+          <img class="direct-chat-img" src="static/dist/img/PusanLogo.jpg" alt="message user image">
+          <div class="direct-chat-text">${msg}</div>
+          </div>`
+        }
+        else {
+          if (stock_code!='Null'){
+          var msghtml =
+          `<div class="direct-chat-msg right">
+          <div class="direct-chat-infos clearfix">
+          <span class="direct-chat-name float-right">${sender}</span>
+          <span class="direct-chat-timestamp float-left">${new Date()}</span>
+          </div>
+          <img class="direct-chat-img" src="static/dist/img/unknown.png" alt="message user image">
+          <div class="direct-chat-text"><b style="color:blue;">${stock_code} </b>${msg}</div>
+          </div>`
+          }
+          else{
+            var msghtml =
+          `<div class="direct-chat-msg right">
+          <div class="direct-chat-infos clearfix">
+          <span class="direct-chat-name float-right">${sender}</span>
+          <span class="direct-chat-timestamp float-left">${new Date()}</span>
+          </div>
+          <img class="direct-chat-img" src="static/dist/img/unknown.png" alt="message user image">
+          <div class="direct-chat-text">${msg}</div>
+          </div>`
+          }};
+          $('#chat_body').append( msghtml ).stop().animate( {
+            scrollTop:$('#chat_body')[0].scrollHeight
+        }, 1000)
+        })
+
+        $('[name=message]').on('keypress',(evt)=>{
+          if(evt.keyCode==13){
+          var client_msg=encodeURI($('[name=message]').val().trim())
+          socket.emit('client_send_msg',{'client_name':user_name,'client_msg':client_msg})
+          $('[name=message]').val('')
+        }})
+        
+        $('#send_btn').on('click',()=>{
+          var client_msg=encodeURI($('[name=message]').val().trim())
+          socket.emit('client_send_msg',{'client_name':user_name,'client_msg':client_msg})
+          $('[name=message]').val('')
+        })
+  </script>
+      </div>
