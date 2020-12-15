@@ -3,7 +3,7 @@ from flask_socketio import SocketIO, emit
 from flask_session import Session
 import re
 import time
-import db
+from db import db
 
 search_api = 'AIzaSyCcsjF9lEDadtt1C76PyvEnK2jfjLAjuxk'
 app = Flask(__name__)
