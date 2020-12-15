@@ -24,7 +24,7 @@ env.hosts       = [
 ]
 env.use_ssh_config  = True
 # 서버에 접속하기 위해서 인증키를 위치시킨다(경로 저장)
-env.key_filename    = 'miniproject_key.pem'
+env.key_filename    = 'aws_KHK.pem'
 # 실 프로젝트 폴더
 # /home/ubuntu/deploy
 project_folder      = '/home/{}/{}'.format(env.user, PROJECT_NAME)
