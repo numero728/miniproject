@@ -46,6 +46,7 @@ for tr in soup.select('tbody > tr'):
     dic = {
         'name' : tr.select_one('.tit').a.string.strip()
         ,'code': tr.select_one('.tit').a.get('href')[-6:-3]
+        ,'info_link' : tr.select_one('.tit').a.get('href')
         ,'buy_std': tr.select_one('.sale').string.strip().replace(',','')
         ,'buy_cash': tr.select_one('td:nth-of-type(3)').string.strip().replace(',','')
         ,'sell_cash': tr.select_one('td:nth-of-type(4)').string.strip().replace(',','')
