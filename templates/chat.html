@@ -1,15 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    {% include "public/head.html" %}
-  </head>
+<head>
+  <title>YaNeoDoo - 파이썬 미니프로젝트 2조</title>
+  {%include "public/head.html" %}
+  {%include "public/lib.html" %}
 
-  <body class="hold-transition sidebar-mini layout-fixed">
-    <div class="wrapper">
-      {%include "public/nav.html"%} {%include "public/menu.html"%} {%include
-      "subPages/chat.html"%} {%include "public/footer.html"%} {%include
-      "public/aside.html"%}
-    </div>
-    {% include "public/js.html" %}
-  </body>
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+
+{% include 'public/nav.html' %}
+
+ {%include 'public/menu.html' %}
+
+
+ {%include 'subpages/chat.html' %}
+  
+
+  {% include 'public/footer.html' %}
+  <!-- Control Sidebar -->
+  {% include 'public/aside.html' %}
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
 </html>
