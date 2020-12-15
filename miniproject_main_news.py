@@ -115,7 +115,7 @@ conn = engine.connect()
 # In[65]:
 
 
-df.to_sql(name = 'main_news', con = conn, if_exists ='append',index = False)
+df.to_sql(name = 'main_news', con = conn, if_exists ='replace',index = False)
 
 
 # In[61]:
