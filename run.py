@@ -6,7 +6,6 @@ from flask_socketio import SocketIO, emit
 from flask import Flask, render_template, session, make_response, url_for, redirect, request, jsonify
 
 
-
 # app 생성 및 환경설정
 
 
@@ -62,8 +61,8 @@ if True:
     def home():
         rows = main_news_query()
         rows2 = exch_query()
-        return render_template('home.html', name='사용자명', main_news = rows, exchange_rates = rows2)
-    
+        return render_template('home.html', name='사용자명', main_news=rows, exchange_rates=rows2)
+
     @app.route('/news')
     def news():
         data = news_query()
@@ -103,11 +102,9 @@ if True:
     def test():
         return render_template('test.html')
 
-
     @app.route('/bbs')
     def bbs():
-      return 'bbstest'
-
+        return 'bbstest'
 
     @app.route('/chat')
     def chat():
