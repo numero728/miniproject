@@ -98,9 +98,9 @@ if True:
         data = youtube_query()
         return render_template('youtube.html', result=data)
 
-    @app.route('/test')
+    @app.route('/cloud')
     def test():
-        return render_template('test.html')
+        return render_template('cloud.html')
 
 
     @app.route('/bbs')
