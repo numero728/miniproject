@@ -4,3 +4,4 @@ beautifulsoup4==4.6.0
 lxml==4.6.1
 urllib3==1.25.11
 chardet==3.0.4
+PyMySQL==0.10.1
