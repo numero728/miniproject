@@ -60,7 +60,8 @@ if True:
 if True:
     @app.route('/')
     def home():
-        return render_template('home.html', name='사용자명')
+        rows = main_news_query()
+        return render_template('home.html', name='사용자명', main_news = rows)
 
     @app.route('/news')
     def news():
