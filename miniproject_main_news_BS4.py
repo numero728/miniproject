@@ -37,7 +37,7 @@ results = list()
 for news in main_news:
     dic = {
         'title' : news.a.string
-        ,'href': 'https://finance.naver.com' + news.a.get('href')
+        ,'href':  news.a.get('href')
     }
     results.append(dic)
 
