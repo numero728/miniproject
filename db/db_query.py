@@ -24,6 +24,30 @@ def news_query():
         conn.close()
         return(data)
 
+def main_news_query():
+    conn=0
+    try:
+        conn=pymysql.connect(
+            host='personaldb.cepsu2i8bkn5.ap-northeast-2.rds.amazonaws.com',
+            user='admin',
+            password='pnudb960726!',
+            port=3306,
+            db='yaneodoo',
+            charset='utf8mb4',
+            cursorclass=pymysql.cursors.DictCursor)
+
+
+        with conn.cursor() as cursor:
+            sql=f"SELECT * FROM main_news2;"
+            cursor.execute(sql)
+            data=cursor.fetchall()
+    except Exception as e:
+        data=str(e)
+    finally:
+        conn.close()
+        return(data)
+
+
 
 def sector_query(sector,pageNo):
     conn=0
