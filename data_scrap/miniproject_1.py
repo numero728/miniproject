@@ -27,7 +27,7 @@ main_news_list = list()
 for news in main_news:
     target = news.find_element_by_tag_name('a')
     main_news_dic = {
-        'title': target.get_attribute('title'), 'href': target.get_attribute('href')
+        'title': target.get_attribute('title'), 'href': 'https://finance.naver.com/'+target.get_attribute('href')
     }
     main_news_list.append(main_news_dic)
 
@@ -46,7 +46,7 @@ db_url = f'{protocal}://{user}:{password}@{domain}:{port}/{database}'
 engine = create_engine(db_url, encoding='utf8')
 conn = engine.connect()
 
-df.to_sql(name='main_news', con=conn, if_exists='replace', index=False)
+df.to_sql(name='main_news2', con=conn, if_exists='replace', index=False)
 
 conn.close()
 
