@@ -26,11 +26,11 @@
               </tr>
             </thead>
             <tbody>
-              {% for dic in result %}
+              {%for row in result%}
               <tr>
-                <td>{{t}}</td>
-                <td>{{n}}</td>
-                <td>{{v}}</td>
+                <td>{{row.t}}</td>
+                <td>{{row.n}}</td>
+                <td>{{row.v}}</td>
               </tr>
               {% endfor %}
             </tbody>

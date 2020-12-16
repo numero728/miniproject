@@ -112,14 +112,15 @@ def youtube_query():
             cursor.execute(sql)
             data = cursor.fetchall()
     except Exception as e:
+        # print(e)
         data = str(e)
     finally:
         conn.close()
-        return(data)
+        return data
 
 
 def news_cloud():
-   pass 
+    pass
 
 
 if __name__ == '__main__':

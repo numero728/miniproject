@@ -6,7 +6,6 @@ from flask_socketio import SocketIO, emit
 from flask import Flask, render_template, session, make_response, url_for, redirect, request, jsonify
 
 
-
 # app 생성 및 환경설정
 
 
@@ -101,11 +100,9 @@ if True:
     def test():
         return render_template('test.html')
 
-
     @app.route('/bbs')
     def bbs():
-      return 'bbstest'
-
+        return 'bbstest'
 
     @app.route('/chat')
     def chat():
