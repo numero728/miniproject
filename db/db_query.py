@@ -118,5 +118,9 @@ def youtube_query():
         return(data)
 
 
+def news_cloud():
+   pass 
+
+
 if __name__ == '__main__':
     data = index_query()
