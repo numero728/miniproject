@@ -1,4 +1,4 @@
-<div class="content-wrapper">
+<div class="content-wrapper" style='min-width:340;min-height:600px;'>
   {%include 'subpublic/chat_header.html'%}
   
 
@@ -6,32 +6,49 @@
 <!-- 레이아웃 요소 위치 -->
 <section class="content">
 
-
-
-
-
 <div class="container-fluid">
-  <div class="column">
-    <section class="col-lg-7 connectedSortable">
-      <div class="card direct-chat direct-chat-primary">
-        <div class="card-header">
-          <h3 class="card-title" id='card_title'>토론방</h3>
-          <div class="card-tools">
-            <span title="Current_user" class="badge badge-primary"></span>
-            <button type="button" class="btn btn-tool" title="Join" data-widget="chat-pane-toggle">
-              <i class="fas fa-sign-in-alt"></i>
-            </button>
+  <div class="column" style='margin:auto;'>
+    <section>
+
+
+
+      <div class="card direct-chat direct-chat-primary" style='min-width:300px;max-width:70%;width:auto;min-height:600px;max-height:90%;clearfix'>
+        <div class="card-header" style='text-align:center;background-color: #007bff;'>
+          <span style='position:relative;display:inline-block;'><b style='color:white'>Chat Room</b></span>
+          <div class="card-tools" value='Join'>
+            <span><button style='border:none;background:none'><i onclick='enter_room();' id='enter_room' class='fas fa-door-closed' style='margin-right:4px;color:white'></i></button></span>
           </div>
+<script>
+
+function enter_room(){
+  var url = 'http://' + document.domain + ':' + location.port;
+      var socket = io.connect(url);
+      var username='None';
+              username = encodeURI(prompt('닉네임을 입력하세요.'));
+              socket.emit('username', { 'username': username });
+      $('#enter_room').attr('class','fas fa-door-open');
+      $('#enter_room').attr('onclick','close_room()');
+}
+function close_room(){
+  var url = 'http://' + document.domain + ':' + location.port;
+  var socket=''
+  var username='None';
+      $('#enter_room').attr('class','fas fa-door-closed');
+      $('#enter_room').attr('onclick','enter_room()');
+}
+</script>
+  
         </div>
 
-        <div class="card-body">
+
+
+
+        <div style='height:100%;' class="card-body">
 
 
 <!--------------- 소켓으로 메시지 수신 후 출력할 공간 -------------->
-          <div style='max-width:100%;margin:auto;align-items:center;'class="direct-chat-messages" id='chatbox'>
-          
-          
-          
+          <div class="direct-chat-messages" id='chatbox'>
+
           </div>
       </div>
         <div class="card-footer">
@@ -46,9 +63,11 @@
           </form>
         </div>
       </div>
-
+ 
     </section>
+
   </div>
+
 </div>
 </section>
 
