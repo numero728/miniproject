@@ -131,13 +131,13 @@ def youtube_query():
             user='admin',
             password='pnudb960726!',
             port=3306,
-            db='scrap_data',
+            db='yaneodoo',
             charset='utf8mb4',
             cursorclass=pymysql.cursors.DictCursor)
 
 
         with conn.cursor() as cursor:
-            sql=f"SELECT * FROM market_index;"
+            sql=f"SELECT * FROM youtube;"
             cursor.execute(sql)
             data=cursor.fetchall()
     except Exception as e:
@@ -149,6 +149,7 @@ def youtube_query():
 
 if __name__ == '__main__':
     data=index_query()
-    print(main_news_query())
+    print(youtube_query())
+
 
 
