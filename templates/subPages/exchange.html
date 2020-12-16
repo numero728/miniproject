@@ -1,0 +1,33 @@
+<div class="content-wrapper">
+{%include 'subpublic/exchange_header.html'%}
+
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+
+              <div class="card-body">
+                <table id="example2" class="table table-bordered table-hover">
+                  <thead>
+                  <tr>
+                    {%for col in result[0].keys()%}
+                    <th>{{col}}</th>
+                    {%endfor%}
+                  </tr>
+                  </thead>
+                  <tbody>
+                    {%for col in result%}
+                  <tr>
+                    {% for v in col.values()%}
+                    <td>{{v}}</td>
+                  {%endfor%}
+                  </tr>
+                  {%endfor%}
+                </table>
+              </div>
+          </div>
+        </div>
+      </div>
+    </section>
+</div>

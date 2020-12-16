@@ -24720,6 +24720,8 @@ select.form-control-sm ~ .select2-container--default .select2-selection--multipl
   position: relative;
 }
 
+
+
 .mapael .mapTooltip {
   font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   font-style: normal;
@@ -32920,3 +32922,11 @@ a.text-muted:hover {
   color: #ced4da;
 }
 /*# sourceMappingURL=adminlte.css.map */
+
+@font-face{
+  src:url('../yafont.ttf');
+  font-family:'yayaya';
+}
+p{
+  font-family: yayaya
+}

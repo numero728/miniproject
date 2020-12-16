@@ -1,0 +1,107 @@
+<!-- 자바스크립트 영역 -->
+
+
+<!-- msg_form의 전송을 방지하는 스크립트 -->
+<script>
+$(document).ready(function(){
+    $('#msg_form').on('submit',()=>{
+      return false;
+    })
+    
+    
+    
+    // <!-- 소켓 io 관련 스크립트 --> 
+    
+    // <!-- 서버와 클라이언트 교차 설명 -->
+    // <!-- 1. 소켓 접속 -->
+    
+      var url = 'http://' + document.domain + ':' + location.port;
+      var socket = io.connect(url);
+      var username='None'
+    
+    // <!-- 3. 유저 닉네임 전송 -->
+
+        socket.on('connect', (evt) => {
+            username = encodeURI(prompt('닉네임을 입력하세요.'));
+            socket.emit('username', { 'username': username })
+        })
+    
+    
+    
+    // <!-- 5. 시스템 메시지 수신 -->
+      socket.on('system_msg',(data)=>{
+        var sender= decodeURI(data.user);
+        var msg=decodeURI(data.msg);
+        var msghtml=`
+        <div class="direct-chat-messages">
+        <div class="direct-chat-msg">
+        <div class="direct-chat-infos clearfix">
+        <span class="direct-chat-name float-left">${sender}</span>
+        <span class="direct-chat-timestamp float-right">${new Date()}</span></div>
+        <img class="direct-chat-img" src="static/dist/img/PusanLogo.jpg" alt="message user image">
+        <div class="direct-chat-text">${msg}</div></div>`;
+        $('#chatbox').append(msghtml).stop().animate({
+          scrollTop:$('#chatbox')[0].scrollHeight
+        }, 1000)
+      })
+    
+    
+    
+    // <!-- 6. 메시지 송신 -->
+    // <!-- 6.1. EnterKey 사용 -->
+    
+      $('[name=message]').on('keypress',(evt)=>{
+        if(evt.keyCode==13){
+        var msg=encodeURI($('[name=message]').val().trim())
+        socket.emit('c_send_msg',{'username':username,'msg':msg})
+        $('[name=message]').val('')
+      }})
+    
+    
+    // <!-- 6.2. 직접 전송버튼 클릭 -->
+      $('#send_btn').on('click',()=>{
+        var msg=encodeURI($('[name=message]').val().trim())
+        socket.emit('c_send_msg',{'username':username,'msg':msg})
+        $('[name=message]').val('')
+        })
+    
+    
+    // <!-- 8. 유저 메시지 수신 -->
+      socket.on('s_send_msg',(data)=>{
+        var sender= data.user;
+        var msg=data.msg;
+        
+        
+        // 송신자와 수신자가 일치
+        if(sender=username){
+        var msghtml=`
+        <div class="direct-chat-messages">
+        <div class="direct-chat-msg">
+        <div class="direct-chat-infos clearfix">
+        <span class="direct-chat-name float-left">${decodeURI(sender)}</span>
+        <span class="direct-chat-timestamp float-right">${new Date()}</span></div>
+        <img class="direct-chat-img" src="static/dist/img/PusanLogo.jpg" alt="message user image">
+        <div class="direct-chat-text">${decodeURI(msg)}</div></div>`;
+        }
+    
+    
+        // 송신자와 수신자가 불일치
+        else{
+        var msghtml = 
+        `<div class="direct-chat-messages">
+        <div class="direct-chat-infos clearfix">
+        <span class="direct-chat-name float-left">${decodeURI(sender)}</span>
+        <span class="direct-chat-timestamp float-right">${new Date()}</span></div>
+        <img class="direct-chat-img" src="static/dist/img/PusanLogo.jpg" alt="message user image">
+        <div class="direct-chat-text" style="margin:auto;width:100%;">${decodeURI(msg)}</div></div>`
+        }
+    
+    
+        // chatbox에 메시지 적재
+        $('#chatbox').append( msghtml ).stop().animate({
+          scrollTop:$('#chatbox')[0].scrollHeight
+        }, 1000)
+        })
+      })
+    </script>
+    

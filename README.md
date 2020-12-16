@@ -1,2 +1,1 @@
-# miniproject
-miniproject
+# personal

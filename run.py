@@ -1,106 +1,142 @@
-from flask import Flask, render_template, session, make_response
+# 모듈 import
+
+
+from flask import Flask, render_template, session, make_response, url_for, redirect, request, jsonify
 from flask_socketio import SocketIO, emit
-from flask_session import Session
 import re
 import time
-from db import db
-
-search_api = 'AIzaSyCcsjF9lEDadtt1C76PyvEnK2jfjLAjuxk'
-app = Flask(__name__)
-app.config['SECRET_KEY'] = 'miniproject'
-app.config['SESSION_TYPE'] = 'filesystem'
-Session(app)
-socketio = SocketIO(app, cors_allowed_origins='*', pingInterval=60000,
-                    pingTimeout=60000, async_mode='threading', manage_session=False)
-msg_pack = []
-log_on = False
+from DB.db_query import *
 
 
-@socketio.on('connect')
-def connect():
-  print('유저가 접속하였다.')
-  # if 'username' in session:
-  #   emit('remain',{'user':session['username']})
-  #   for i in msg_pack:
-  #     emit('server_send_msg',{'user':i['user'],'msg':i['msg']})
-  # else:
-  #   pass
+
+# app 생성 및 환경설정
 
 
-@socketio.on('client_send_name')
-def client_send_name_handler(data):
-  print(dir(data))
-  client_name = data['client_name']
-  msg = f'{client_name}님이 입장하셨습니다.'
-  session['username'] = client_name
-  emit('system_msg', {'user': 'admin', 'msg': msg}, broadcast=True)
-  if len(msg_pack) > 100:
-    msg_pack.pop(msg_pack[0])
-    msg_pack.append({'user': 'awedmin', 'msg': msg})
-  else:
-    msg_pack.append({'user': 'admin', 'msg': msg})
+app=Flask(__name__)
+app.config['SECRET_KEY']='miniproject'
+users=[]
+
+# socketio 객체 생성
 
 
-@socketio.on('client_send_msg')
-def client_send_msg_handler(data):
-  client_name = data['client_name']
-  msg = data['client_msg']
-  emit('server_send_msg', {'user': client_name,
-       'msg': msg, 'stock_code': 'Null'}, broadcast=True)
-  if len(msg_pack) > 100:
-    msg_pack.pop(msg_pack[0])
-    msg_pack.append({'user': client_name, 'msg': msg})
-  else:
-    msg_pack.append({'user': client_name, 'msg': msg})
+socketio=SocketIO(app,cors_allowed_origins='*', pingInterval=600000,pingTimeout=600000,async_mode='threading', manage_session=False)
 
 
-@app.route('/')
-def home():
-    return render_template('home.html', name='사용자명')
+
+msg_pack=[]
+
+dir(socketio)
 
 
-@app.route('/news')
-def news():
-    return render_template('news.html', name='사용자명')
+
+# socketio 통신 관련
+if True:
+
+  # 2. 유저 접속 수신
+  @socketio.on('connect')
+  def connect():
+    print('유저 접속')
 
 
-@app.route('/index')
-def index():
-    return render_template('index.html', name='사용자명')
+
+  # 4. 유저 송신한 닉네임 수신 및 시스템 메시지 송신
+  @socketio.on('username')
+  def username(data):
+    username=data['username']
+    msg=f'{username}님이 입장하셨습니다.'
+    emit('system_msg',{'user':'admin','msg':msg},broadcast=True)
 
 
-@app.route('/exchange_rate')
-def exchange_rate():
-  rows = db_get_ExchangeRate()
-  return render_template('exchage_rate.html', stocks=rows)
+  # 7. 유저 송신한 메시지 수신 및 중계
+  @socketio.on('c_send_msg')
+  def c_send_msg(data):
+    username=data['username']
+    msg=data['msg']
+    emit('s_send_msg',{'user':username,'msg':msg},broadcast=True)
 
 
-@app.route('/chat')
-def chat():
-  if 'username' in session:
-    print('''
-    
-    
-    
-    
-    
-    
-    
-    테스트
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    ''')
-    return render_template('chat.html', reconnect='True')
-  else:
-    return render_template('chat.html', reconnect='False')
+  # 9. 유저 이탈
+  @socketio.on('disconnect')
+  def disconnect():
+    print('유저 이탈')
 
 
-if __name__ =='__main__':
+if True:
+  @app.route('/')
+  def home():
+      return render_template('home.html', name='사용자명')
+
+  @app.route('/news')
+  def news():
+      data=news_query()
+      return render_template('news.html', result=data)
+
+  @app.route('/exchange')
+  def exchange():
+      data=exch_query()
+      data_body=[]
+      for d in data:
+        d.pop('info_link')
+        data_body.append(d)
+      data=data_body
+      return render_template('exchange.html', result=data)
+
+  @app.route('/index')
+  def index():
+    data=index_query()
+    list(data[0].keys())
+    data_body=[]
+    for d in data:
+      k=list(d.keys())
+      v=list(d.values())
+      k=k[0:9]
+      v=v[0:9]
+      kv=dict(zip(k,v))
+      data_body.append(kv)
+    data=data_body
+    return render_template('index.html', result=data)
+
+  @app.route('/youtube')
+  def youtube():
+      data=youtube_query()
+      return render_template('youtube.html', result=data)
+
+  @app.route('/test')
+  def test():
+      return render_template('test.html')
+
+
+  @app.route('/chat')
+  def chat():
+    if 'username' in session:
+      print('''
+      
+      
+      
+      
+      
+      
+      
+      테스트
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      ''')
+      return render_template('chat.html', reconnect='True')
+    else:
+      return render_template('chat.html', reconnect='False')
+
+  
+
+
+if __name__=='__main__':
   socketio.run(app, debug=True)
+
+
+
