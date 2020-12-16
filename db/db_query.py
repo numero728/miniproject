@@ -149,6 +149,6 @@ def youtube_query():
 
 if __name__ == '__main__':
     data=index_query()
-
+    print(main_news_query())
 
 

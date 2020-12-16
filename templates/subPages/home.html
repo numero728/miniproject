@@ -5,24 +5,21 @@
         <div class="container-fluid">
             <!-- Small boxes (Stat box) -->
             <div class="row">
-                <div class="col-lg-6 col-6">
+                <div class="col-lg-5 col-6">
                     <!-- small box -->
-                    <div class="small-box bg-info">
-                        <div class="inner">
-                            <h6>실시간 뉴스</h6>
-
-                            <p>
-                                {% for news in main_news: %}
-                                <td>
-                                    <a href="{{news['href']}}">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-info"><i class="fas fa-newspaper"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text"> 
+                                <h3>실시간 뉴스</h3>
+                            </span>
+                            {% for news in main_news: %}
+                                <p>
+                                    <a href="https://finance.naver.com{{news['href']}}">
                                     {{news['title']}}
                                     </a>
-                                </td>
-                                {% endfor %}
-                            </p>
-                        </div>
-                        <div class="icon">
-                            <i class="fas fa-newspaper"></i>
+                                </p>
+                            {% endfor %}
                         </div>
                         <a href="{{url_for('news')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
