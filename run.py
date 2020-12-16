@@ -1,4 +1,3 @@
-# 모듈 import
 
 from db.db_query import *
 import time
@@ -6,9 +5,6 @@ import re
 from flask_socketio import SocketIO, emit
 from flask import Flask, render_template, session, make_response, url_for, redirect, request, jsonify
 
-'''
-테스트 테스트
-'''
 
 
 # app 생성 및 환경설정
@@ -105,11 +101,16 @@ if True:
     def test():
         return render_template('test.html')
 
+
+    @app.route('/bbs')
+    def bbs():
+      return 'bbstest'
+
+
     @app.route('/chat')
     def chat():
         if 'username' in session:
             print('''
-      
       
       
       
