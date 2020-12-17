@@ -1,61 +1,154 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>Index</title>
-		{% include "public/head.html" %}
-		{% include "public/font.html" %}
-	</head>
-	
-	<body>
-		<div class="page-wrap" id="root">
-			
-			<!-- header -->
-			{% include "public/header.html" %}
-			<!-- Content-->
-			<div class="wil-content">
-				
-				<!-- Section -->
-				<section class="awe-section">
-					<div class="container">
-						
-						<!-- page-title -->
-						<div class="page-title pb-40">
-							<h2 class="page-title__title">Main Index</h2>
-							<p class="page-title__text" style="font-family: Nanum Pen Script; font-size: 25px;">주요 증시 흐름의 체크는 기본이다! </p>
-							<div class="page-title__divider"></div>
-						</div><!-- End / page-title -->
-						
+
+<head>
+	<title>Index</title>
+	{% include "public/head.html" %}
+	<style>
+		@import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
+		/* font-family: 'Jeju Gothic', serif; */
+		@import url(http://fonts.googleapis.com/earlyaccess/nanumpenscript.css);
+		/* font-family: 'Nanum Pen Script', serif; */
+		@import url(http://fonts.googleapis.com/earlyaccess/hanna.css);
+		/* font-family: 'Hanna', serif; */
+		@import url(http://fonts.googleapis.com/earlyaccess/nanumbrushscript.css);
+		/* font-family: 'Nanum Brush Script', serif; */
+		@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+
+		/* font-family: 'Nanum Gothic', serif; */
+
+		table {
+			overflow-x: auto;
+		}
+
+		table.type11 {
+			border-collapse: separate;
+			border-spacing: 1px;
+			text-align: center;
+			line-height: 1.5;
+			margin: 0px 0px;
+		}
+
+		table.type11 th {
+			width: 155px;
+			padding: 10px;
+			font-weight: bold;
+			vertical-align: top;
+			color: #fff;
+			background: #ce4869;
+		}
+
+		table.type11 td {
+			width: 155px;
+			padding: 10px;
+			vertical-align: top;
+			border-bottom: 1px solid #ccc;
+			background: #eee;
+		}
+
+		a.kospi:hover {
+			text-decoration: underline;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="page-wrap" id="root">
+
+		<!-- header -->
+		{% include "public/header.html" %}
+		<!-- Content-->
+		<div class="wil-content">
+
+			<!-- Section -->
+			<section class="awe-section">
+				<div class="container">
+
+					<!-- page-title -->
+					<div class="page-title pb-40">
+						<h2 class="page-title__title">Main Index</h2>
+						<p class="page-title__text" style="font-family: Nanum Pen Script; font-size: 25px;">주요 증시 흐름의 체크는 기본이다! </p>
+						<div class="page-title__divider"></div>
+					</div><!-- End / page-title -->
+
+				</div>
+			</section>
+			<!-- End / Section -->
+			<!-- Section -->
+			<section class="awe-section bg-gray">
+				<div class="container">
+					<div class="dataTables_paginate paging_simple_numbers" id="example2_paginate">
+						<!-- 페이지 넘어가기 구간-->
+						<ul class="paging">
+							<!-- {{ paging }} -->
+							<li style="display: inline-block; font-size: 60px;">
+								{% if paging.prePage: %}
+									<a id='previous' href="{{ url_for('index') }}?PageNo={{ paging.prePage }}&amt={{ paging.amt }}">«</a>
+								{% else %}
+									<a id='previous' href="javascript:alert('첫 페이지 입니다');">«</a>
+								{% endif %}
+							</li>
+							<!-- &nbsp &nbsp &nbsp &nbsp -->
+							<li style="display: inline-block; font-size: 60px;">
+								{% if paging.nextPage: %}
+									<a id='next' href="{{ url_for('index') }}?PageNo={{ paging.nextPage }}&amt={{ paging.amt }}"> » </a>
+								{% else %}
+									<a id='next' href="javascript:alert('마지막 페이지 입니다');">»</a>
+								{% endif %}
+							</li>
+						</ul>
 					</div>
-				</section>
-				<!-- End / Section -->
-				
-				
-				<!-- Section -->
-				<section class="awe-section bg-gray">
-					<div class="container">
-						
-						<!--  -->
-						<div>
-							<div class="work-detail__entry">
-							</div>
-						</div><!-- End /  -->
-						
-						<div class="awe-text-center mt-50">
-							<a class="md-btn md-btn--outline-primary " href="{{url_for('home')}}">Home
-							</a>
-						</div>
+					<table class="type11">
+						<thead>
+							<tr style="font-family: Jeju Gothic; font-weight: 100;">
+								<th scope="cols">지수명</th>
+								<th scope="cols">현재가</th>
+								<th scope="cols">전일비</th>
+								<th scope="cols">등락률(%)</th>
+								<th scope="cols">시가지수</th>
+								<th scope="cols">고가지수</th>
+								<th scope="cols">저가지수</th>
+								<th scope="cols">전체종목수</th>
+								<th scope="cols">거래종목수</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for index in market_index %}
+							<tr style="font-family: Nanum Gothic; font-weight: bold;">
+								<td>{{index.지수명}}</td>
+								<td>{{index.현재가}}</td>
+								<td>{{index.전일비}}</td>
+								<td>{{index['등락률(%)']}}</td>
+								<td>{{index.시가지수}}</td>
+								<td>{{index.고가지수}}</td>
+								<td>{{index.저가지수}}</td>
+								<td>{{index.전체종목수}}</td>
+								<td>{{index.거래종목수}}</td>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+					<div class="work-detail__entry">
 					</div>
-				</section>
-				<!-- End / Section -->
-				
-			</div>
-			<!-- End / Content-->
-			
-			<!-- footer -->
-			{% include "public/footer.html" %}
-			
+				</div><!-- End /  -->
+
+				<div class="awe-text-center mt-50">
+					<a class="md-btn md-btn--outline-primary " href="{{url_for('home')}}">Home
+					</a>
+				</div>
 		</div>
-		<!-- Vendors-->
-		{% include "public/vendors.html" %}
-	</body>
+		</section>
+		<!-- End / Section -->
+
+	</div>
+	<!-- End / Content-->
+
+	<!-- footer -->
+	{% include "public/footer.html" %}
+
+	</div>
+	<!-- Vendors-->
+	{% include "public/vendors.html" %}
+</body>
+
 </html>

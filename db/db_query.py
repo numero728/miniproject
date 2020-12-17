@@ -15,7 +15,7 @@ def news_query():
 
 
         with conn.cursor() as cursor:
-            sql=f"SELECT * FROM main_news;"
+            sql=f"SELECT * FROM main_news3;"
             cursor.execute(sql)
             data=cursor.fetchall()
     except Exception as e:
@@ -119,6 +119,35 @@ def index_query():
         conn.close()
         return(data)
 
+def db_selectIndexList(curPageId=1, onePage_dataNum=10):
+    conn = None
+    rows = None
+    try:
+        conn = pymysql.connect(host='personaldb.cepsu2i8bkn5.ap-northeast-2.rds.amazonaws.com',
+                          user='admin',
+                          password='pnudb960726!',
+                          port=3306,
+                          db='scrap_data',
+                          charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
+        # --------------------------------------
+        with conn.cursor() as cursor:
+            sql = 'SELECT * FROM market_index LIMIT %s, %s;'
+            # 한페이지에서 보여지는 데이터의 총 수
+            amt = onePage_dataNum
+            # 데이터를 가져오는 row상의 시작 위치
+            startPage = (curPageId - 1) * amt
+            cursor.execute(sql, (startPage, amt))
+            # 결과를 다 가져와라
+            rows = cursor.fetchall()
+        # --------------------------------------
+    except Exception as e:
+        print('예외 발생', e)
+    finally:
+        if conn:
+            conn.close()
+    return rows
+
+
 
 def youtube_query():
     conn=0
@@ -146,4 +175,4 @@ def youtube_query():
 
 if __name__ == '__main__':
     data=index_query()
-    print(exch_query()[0].keys())
+    print(len(news_query()))

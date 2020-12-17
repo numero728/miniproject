@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Work detail</title>
+		<title>Live News</title>
 		{% include "public/head.html" %}
 		{% include "public/font.html" %}
 	</head>
@@ -21,8 +21,8 @@
 						
 						<!-- page-title -->
 						<div class="page-title pb-40">
-							<h2 class="page-title__title">The Myth of Ugly Design</h2>
-							<p class="page-title__text">Nam elit ligula, egestas et ornare non, </p>
+							<h2 class="page-title__title">Live News</h2>
+							<p class="page-title__text" style="font-family: Nanum Pen Script; font-size: 25px;">주식을 한다면, 세상 돌아가는 건 당연히 알아야지! </p>
 							<div class="page-title__divider"></div>
 						</div><!-- End / page-title -->
 						
@@ -34,15 +34,105 @@
 				<!-- Section -->
 				<section class="awe-section bg-gray">
 					<div class="container">
-						
-						<!--  -->
-						<div>
-							<div class="work-detail__entry">
+						<div class="grid-css grid-css--masonry" data-col-lg="3" data-col-md="2" data-col-sm="2" data-col-xs="1" data-gap="30">
+							<div class="grid__inner">
+								<div class="grid-sizer"></div>
+								{% for i in range(0, news_count,3) %}
+									{% if i < news_count %}
+										<!-- 영상 1-->
+										<div class="grid-item">
+											<div class="grid-item__inner">
+												<div class="grid-item__content-wrapper">
+													
+													<!-- work -->
+													<div class="work"><a href="{{main_news[i].href}}">
+															
+															<!-- hoverbox ef-slide-top -->
+															<div class="hoverbox ef-slide-top light">
+																
+																<!-- hb_front -->
+																<div class="hb_front"><img src="https://cdn.pixabay.com/photo/2015/11/07/12/02/business-1031754_960_720.jpg" alt=""/>
+																</div><!-- End / hb_front -->
+																
+																
+																<!-- hb_back -->
+																<div class="hb_back">
+																	<h2 class="work__title" style="font-family: Nanum Gothic;">{{main_news[i].title}}</h2><span class="work__text">{{main_news[i].time}}</span>
+																</div><!-- End / hb_back -->
+																
+															</div><!-- End / hoverbox ef-slide-top -->
+															</a>
+													</div><!-- End / work -->
+													
+												</div>
+											</div>
+										</div>
+									{% endif %}
+									{% if i+1 < news_count %}
+										<!-- 영상 3-->
+										<div class="grid-item">
+											<div class="grid-item__inner">
+												<div class="grid-item__content-wrapper">
+													
+													<!-- work -->
+													<div class="work"><a href="{{main_news[i+1].href}}">
+															
+															<!-- hoverbox ef-push-bottom -->
+															<div class="hoverbox ef-push-bottom light">
+																
+																<!-- hb_front -->
+																<div class="hb_front"><img src="https://cdn.pixabay.com/photo/2015/11/07/12/02/business-man-1031755_960_720.jpg" alt=""/>
+																</div><!-- End / hb_front -->
+																
+																
+																<!-- hb_back -->
+																<div class="hb_back">
+																	<h2 class="work__title" style="font-family: Nanum Gothic;">{{main_news[i+1].title}}</h2><span class="work__text">{{main_news[i+1].time}}</span>
+																</div><!-- End / hb_back -->
+																
+															</div><!-- End / hoverbox ef-push-bottom -->
+															</a>
+													</div><!-- End / work -->
+													
+												</div>
+											</div>
+										</div>
+									{% endif %}
+									{% if i+2 < news_count %}
+										<!-- 영상 4-->	
+										<div class="grid-item">
+											<div class="grid-item__inner">
+												<div class="grid-item__content-wrapper">
+													
+													<!-- work -->
+													<div class="work"><a href="{{main_news[i+2].href}}">
+															
+															<!-- hoverbox ef-slide-left -->
+															<div class="hoverbox ef-slide-left light">
+																
+																<!-- hb_front -->
+																<div class="hb_front"><img src="https://cdn.pixabay.com/photo/2015/01/09/11/30/chart-594212_960_720.jpg" alt=""/>
+																</div><!-- End / hb_front -->
+																
+																
+																<!-- hb_back -->
+																<div class="hb_back">
+																	<h2 class="work__title" style="font-family: Nanum Gothic;">{{main_news[i+2].title}}</h2><span class="work__text">{{main_news[i+2].time}}</span>
+																</div><!-- End / hb_back -->
+																
+															</div><!-- End / hoverbox ef-slide-left -->
+															</a>
+													</div><!-- End / work -->
+													
+												</div>
+											</div>
+										</div>
+									{% endif %}
+								{% endfor %}
 							</div>
-						</div><!-- End /  -->
-						
+						</div>
 						<div class="awe-text-center mt-50">
-							<a class="md-btn md-btn--outline-primary " href="{{url_for('home')}}">Home
+							<a class="md-btn md-btn--outline-primary " href="#">more work
 							</a>
 						</div>
 					</div>
