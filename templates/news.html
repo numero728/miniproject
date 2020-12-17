@@ -1,19 +1,62 @@
 <!DOCTYPE html>
-<html lang="kr">
-
-<head>
-  <title>YaNeoDoo - 파이썬 미니프로젝트 2조</title>
-    {%include "public/head.html"    %}
-</head>
-
-<body class="hold-transition sidebar-mini layout-fixed">
-  <div class="wrapper">
-    {% include 'public/nav.html'    %}
-    {% include 'public/menu.html'   %}
-    {% include 'subPages/news.html' %}
-    {% include "public/footer.html" %}
-    {% include 'public/aside.html'  %}
-  </div>
-</body>
-
+<html>
+	<head>
+		<title>Work detail</title>
+		{% include "public/head.html" %}
+		{% include "public/font.html" %}
+	</head>
+	
+	<body>
+		<div class="page-wrap" id="root">
+			
+			<!-- header -->
+			{% include "public/header.html" %}
+			
+			<!-- Content-->
+			<div class="wil-content">
+				
+				<!-- Section -->
+				<section class="awe-section">
+					<div class="container">
+						
+						<!-- page-title -->
+						<div class="page-title pb-40">
+							<h2 class="page-title__title">The Myth of Ugly Design</h2>
+							<p class="page-title__text">Nam elit ligula, egestas et ornare non, </p>
+							<div class="page-title__divider"></div>
+						</div><!-- End / page-title -->
+						
+					</div>
+				</section>
+				<!-- End / Section -->
+				
+				
+				<!-- Section -->
+				<section class="awe-section bg-gray">
+					<div class="container">
+						
+						<!--  -->
+						<div>
+							<div class="work-detail__entry">
+							</div>
+						</div><!-- End /  -->
+						
+						<div class="awe-text-center mt-50">
+							<a class="md-btn md-btn--outline-primary " href="{{url_for('home')}}">Home
+							</a>
+						</div>
+					</div>
+				</section>
+				<!-- End / Section -->
+				
+			</div>
+			<!-- End / Content-->
+			
+			<!-- footer -->
+			{% include "public/footer.html" %}
+			
+		</div>
+		<!-- Vendors-->
+		{% include "public/vendors.html" %}
+	</body>
 </html>

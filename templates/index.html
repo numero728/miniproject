@@ -1,19 +1,299 @@
 <!DOCTYPE html>
-<html lang="kr">
+<html>
+	<head>
+		<title>야! 너두?</title>
+		{% include "public/head.html" %}
+		{% include "public/font.html" %}
+	</head>
+	
+	<body>
+		<div class="page-wrap" id="root">
+			<!-- header -->
+			{% include "public/header.html" %}
+			<!-- Content-->
+			<div class="wil-content">
+				<!-- Section -->
+				<section class="awe-section">
+					<div class="container">
+						
+						<!-- page-title -->
+						<div class="page-title">
+							<h2 class="page-title__title" style="font-family: Jeju Gothic; display: inline-block; color: crimson;" >주린이</h2> &nbsp;
+							<h2 class="page-title__title" style="font-family: Jeju Gothic; display: inline-block; color: black;">다 모여라! </h2>
+							<h2>
+								<!-- typing__module -->
+								<div class="typing__module" style='font-family: Nanum Pen Script;'>
+									<div class="typed-strings"><span>주식을 처음 시작해!</span><span>뭘 보고 사야할까?</span><span>무슨 주식을 사야할까?</span>
+									</div><span class="typed"></span>
+								</div><!-- End / typing__module -->
+								
+							</h2>
+							<p class="page-title__text"></p>
+							<div class="page-title__divider"></div>
+						</div><!-- End / page-title -->
+						
+					</div>
+				</section>
+				<!-- End / Section -->
+				
+				
+				<!-- Section -->
+				<section class="awe-section bg-gray">
+					<div class="container">
+						<div class="row">
+							<div class="col-lg-6 ">
+								
+								<!-- title -->
+								<div class="title">
+									<h2 class="title__title">Service</h2>
+								</div><!-- End / title -->
+								
+							</div>
+						</div>
+						<div class="grid-css grid-css--masonry" data-col-lg="3" data-col-md="2" data-col-sm="2" data-col-xs="1" data-gap="30">
+							<div class="grid__inner">
+								<div class="grid-sizer"></div>
+								<!-- 뉴스 -->
+								<div class="grid-item">
+									<div class="grid-item__inner">
+										<div class="grid-item__content-wrapper">
+											
+											<!-- work -->
+											<div class="work"><a href="{{url_for('news')}}">
+													
+													<!-- hoverbox ef-slide-bottom -->
+													<div class="hoverbox ef-slide-bottom light">
+														
+														<!-- hb_front -->
+														<div class="hb_front"><img src="https://cdn.pixabay.com/photo/2016/02/01/00/56/news-1172463_960_720.jpg" alt=""/>
+														</div><!-- End / hb_front -->
+														
+														
+														<!-- hb_back -->
+														<div class="hb_back">
+															<h2 class="work__title" style="font-family: Jeju Gothic; display: inline-block">실시간</h2>
+															<h2 class="work__title" style="font-family: Jeju Gothic; display: inline-block; color:red">뉴스</h2>
+															<p class="work__text" style='font-family: Nanum Pen Script; font-size: 30px;'>주식은 정보싸움!</p>
+														</div><!-- End / hb_back -->
+														
+													</div><!-- End / hoverbox ef-slide-bottom -->
+													</a>
+											</div><!-- End / work -->
+											
+										</div>
+									</div>
+								</div>
+								<!-- 환율 -->
+								<div class="grid-item">
+									<div class="grid-item__inner">
+										<div class="grid-item__content-wrapper">
+											<div class="work"><a href="{{url_for('exchange')}}">
+													<div class="hoverbox ef-slide-right light">
+														<!-- hb_front -->
+														<div class="hb_front"><img src="https://cdn.pixabay.com/photo/2015/02/20/22/40/courses-643727_960_720.jpg" alt=""/>
+														</div><!-- End / hb_front -->
+														
+														
+														<!-- hb_back -->
+														<div class="hb_back">
+															<h2 class="work__title" style="font-family: Jeju Gothic; display: inline-block">실시간</h2>
+															<h2 class="work__title" style="font-family: Jeju Gothic; display: inline-block; color:red">환율</h2>
+															<p class="work__text" style='font-family: Nanum Pen Script; font-size: 25px;'>환율은 해외에서 우리나라 주식에 관여하는 정도를 파악하기 좋은 지표야!</p>
+														</div><!-- End / hb_back -->
+														
+													</div><!-- End / hoverbox ef-slide-right -->
+													</a>
+											</div><!-- End / work -->
+											
+										</div>
+									</div>
+								</div>
+								<!-- 증시 -->
+								<div class="grid-item">
+									<div class="grid-item__inner">
+										<div class="grid-item__content-wrapper">
+											
+											<!-- work -->
+											<div class="work"><a href="{{url_for('index')}}">
+													
+													<!-- hoverbox ef-zoom-in -->
+													<div class="hoverbox ef-zoom-in light">
+														
+														<!-- hb_front -->
+														<div class="hb_front"><img src="https://cdn.pixabay.com/photo/2016/11/23/14/37/blur-1853262_960_720.jpg" alt=""/>
+														</div><!-- End / hb_front -->
+														
+														
+														<!-- hb_back -->
+														<div class="hb_back">
+															<h2 class="work__title" style="font-family: Jeju Gothic; display: inline-block">실시간</h2>
+															<h2 class="work__title" style="font-family: Jeju Gothic; display: inline-block; color:red">증시</h2>
+															<p class="work__text" style='font-family: Nanum Pen Script; font-size: 30px;'>증권시장의 현 상황을 아는 것은 매우 중요하지!</p>
+														</div><!-- End / hb_back -->
+														
+													</div><!-- End / hoverbox ef-zoom-in -->
+													</a>
+											</div><!-- End / work -->
+											
+										</div>
+									</div>
+								</div>
+								<!-- 인기 주식 동영상 -->
+								<div class="grid-item">
+									<div class="grid-item__inner">
+										<div class="grid-item__content-wrapper">
+											
+											<!-- work -->
+											<div class="work"><a href="work-detail.html">
+													
+													<!-- hoverbox ef-slide-right -->
+													<div class="hoverbox ef-slide-right light">
+														
+														<!-- hb_front -->
+														<div class="hb_front"><img src="https://cdn.pixabay.com/photo/2017/08/10/03/00/youtube-2617510_960_720.jpg" alt=""/>
+														</div><!-- End / hb_front -->
+														
+														
+														<!-- hb_back -->
+														<div class="hb_back">
+															<h2 class="work__title" style="font-family: Jeju Gothic; display: inline-block">동영상</h2>
+															<h2 class="work__title" style="font-family: Jeju Gothic; display: inline-block; color:red">정보</h2>
+															<p class="work__text" style='font-family: Nanum Pen Script; font-size: 30px;'>다양한 사례, 쏟아지는 정보를 영상으로 보면 더 와닿을지도?!</p>
+														</div><!-- End / hb_back -->
+														
+													</div><!-- End / hoverbox ef-slide-right -->
+													</a>
+											</div><!-- End / work -->
+											
+										</div>
+									</div>
+								</div>
+								<!-- 실시간 채팅 -->
+								<div class="grid-item">
+									<div class="grid-item__inner">
+										<div class="grid-item__content-wrapper">
+											
+											<!-- work -->
+											<div class="work"><a href="{{url_for('chat')}}">
+													
+													<!-- hoverbox ef-zoom-in -->
+													<div class="hoverbox ef-zoom-in light">
+														
+														<!-- hb_front -->
+														<div class="hb_front"><img src="https://cdn.pixabay.com/photo/2015/10/30/16/42/balloon-1014411_960_720.jpg" alt=""/>
+														</div><!-- End / hb_front -->
+														
+														
+														<!-- hb_back -->
+														<div class="hb_back">
+															<h2 class="work__title" style="font-family: Jeju Gothic; display: inline-block">실시간</h2>
+															<h2 class="work__title" style="font-family: Jeju Gothic; display: inline-block; color:red">토론</h2>
+															<p class="work__text" style='font-family: Nanum Pen Script; font-size: 25px;'>여러 의견을 들어보는 것도 좋은 방법이야!</p>
+														</div><!-- End / hb_back -->
+														
+													</div><!-- End / hoverbox ef-zoom-in -->
+													</a>
+											</div><!-- End / work -->
+											
+										</div>
+									</div>
+								</div>
+								<!-- ABOUT US -->
+								<div class="grid-item">
+									<div class="grid-item__inner">
+										<div class="grid-item__content-wrapper">
 
-<head>
-  <title>YaNeoDoo - 파이썬 미니프로젝트 2조</title>
-    {%include "public/head.html"    %}
-</head>
+											<div class="work"><a href="{{url_for('about')}}">
+													
+										
+													<div class="hoverbox ef-move-right light">
+	
+														<div class="hb_front"><img src="/static/assets/img/yaneodoo_logo.png" alt=""/>
+														</div>
 
-<body class="hold-transition sidebar-mini layout-fixed">
-  <div class="wrapper">
-    {% include 'public/nav.html'    %}
-    {% include 'public/menu.html'   %}
-    {% include 'subPages/index.html' %}
-    {% include "public/footer.html" %}
-    {% include 'public/aside.html'  %}
-  </div>
-</body>
+														<div class="hb_back">
+															<h2 class="work__title" style="font-family: Jeju Gothic; display: inline-block">ABOUT</h2>
+															<h2 class="work__title" style="font-family: Jeju Gothic; display: inline-block; color:red">US</h2>
+														</div>
+														
+													</div>
+													</a>
+											</div>
+											
+										</div>
+									</div>
+								</div>
+								<!-- <div class="grid-item">
+									<div class="grid-item__inner">
+										<div class="grid-item__content-wrapper">
 
+											<div class="work"><a href="work-detail.html">
+													
+										
+													<div class="hoverbox ef-move-right light">
+														
+														
+														<div class="hb_front"><img src="https://images.pexels.com/photos/792906/pexels-photo-792906.jpeg?w=1260&amp;h=750&amp;auto=compress&amp;cs=tinysrgb" alt=""/>
+														</div>
+														
+														
+													
+														<div class="hb_back">
+															<h2 class="work__title">Free PSD Files</h2><span class="work__text">View detail</span>
+														</div>
+														
+													</div>
+													</a>
+											</div>
+											
+										</div>
+									</div>
+								</div>
+								<div class="grid-item">
+									<div class="grid-item__inner">
+										<div class="grid-item__content-wrapper">
+
+											<div class="work"><a href="work-detail.html">
+													
+										
+													<div class="hoverbox ef-move-right light">
+														
+														
+														<div class="hb_front"><img src="https://images.pexels.com/photos/792906/pexels-photo-792906.jpeg?w=1260&amp;h=750&amp;auto=compress&amp;cs=tinysrgb" alt=""/>
+														</div>
+														
+														
+													
+														<div class="hb_back">
+															<h2 class="work__title">Free PSD Files</h2><span class="work__text">View detail</span>
+														</div>
+														
+													</div>
+													</a>
+											</div>
+											
+										</div>
+									</div>
+								</div> -->
+							
+							</div>
+						</div>
+						<div class="awe-text-center mt-50">
+							<a class="md-btn md-btn--outline-primary" href="#">all work
+							</a>
+						</div>
+					</div>
+				</section>
+				<!-- End / Section -->
+				
+			</div>
+			<!-- End / Content-->
+			
+			<!-- footer -->
+			{% include "public/footer.html" %}
+			
+		</div>
+		<!-- Vendors-->
+		{% include "public/vendors.html" %}
+	</body>
 </html>

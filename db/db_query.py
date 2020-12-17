@@ -47,8 +47,6 @@ def main_news_query():
         conn.close()
         return(data)
 
-
-
 def sector_query(sector,pageNo):
     conn=0
     sector_book={'elec':'전기','stock':'증시','bond':'채권'}
@@ -73,7 +71,6 @@ def sector_query(sector,pageNo):
     finally:
         conn.close()
         return(data)
-
 
 def exch_query():
     conn=0
@@ -149,7 +146,4 @@ def youtube_query():
 
 if __name__ == '__main__':
     data=index_query()
-    print(youtube_query())
-
-
-
+    print(exch_query()[0].keys())

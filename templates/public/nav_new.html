@@ -1,0 +1,89 @@
+
+<nav class="navigation">
+  <ul class="menu">
+    <!-- nav.info 야! 너두? 의 소개페이지 -->
+    <li class="menu__item">
+        <a href="{{url_for('home')}}" class="menu__link">
+          <i class="far fa-lightbulb"></i>
+          <span class="menu__title">
+            <span class="menu__first-word" data-hover="야!">
+              야!
+            </span>
+            <span class="menu__second-word" data-hover="너두?">
+              너두?
+            </span>
+          </span>
+        </a>
+    </li>
+    <!-- nav.main_news -->
+    <li class="menu__item">
+      <a href="{{url_for('news')}}" class="menu__link">
+        <i class="far fa-newspaper"></i>
+        <span class="menu__title">
+          <span class="menu__first-word" data-hover="업종별">
+            업종별
+          </span>
+          <span class="menu__second-word" data-hover="뉴스">
+            뉴스
+          </span>
+        </span>
+      </a>
+    </li>
+    <!-- nav.index -->
+    <li class="menu__item">
+      <a href="{{url_for('index')}}" class="menu__link">
+        <i class="nav-icon fas fa-chart-bar"></i>
+        <span class="menu__title">
+          <span class="menu__first-word" data-hover="주요">
+            주요
+          </span>
+          <span class="menu__second-word" data-hover="증시">
+            증시
+          </span>
+        </span>
+      </a>
+    </li>
+    <!-- nav.exchange_rate -->
+    <li class="menu__item">
+      <a href="{{url_for('exchange')}}" class="menu__link">
+        <i class="fas fa-dollar-sign"></i>
+        <span class="menu__title">
+          <span class="menu__first-word" data-hover="환율">
+            환율
+          </span>
+          <span class="menu__second-word" data-hover="지표">
+            지표
+          </span>
+        </span>
+      </a>
+    </li>
+    <!-- nav.chat -->
+    <li class="menu__item">
+      <a href="{{url_for('chat')}}" class="menu__link">
+        <i class="fas fa-comment"></i>
+        <span class="menu__title">
+          <span class="menu__first-word" data-hover="실시간">
+            실시간
+          </span>
+          <span class="menu__second-word" data-hover="토론">
+            토론
+          </span>
+        </span>
+      </a>
+    </li>
+    <!-- nav.videos -->
+    <li class="menu__item">
+      <a href="{{url_for('youtube')}}" class="menu__link">
+        <i class="fab fa-youtube"></i>
+        <span class="menu__title">
+          <span class="menu__first-word" data-hover="인기">
+            인기
+          </span>
+          <span class="menu__second-word" data-hover="동영상">
+            동영상
+          </span>
+        </span>
+      </a>
+    </li>
+  </ul>
+</nav>

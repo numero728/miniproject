@@ -1,19 +1,124 @@
 <!DOCTYPE html>
-<html lang="kr">
+<html>
 
 <head>
-  <title>YaNeoDoo - 파이썬 미니프로젝트 2조</title>
-    {%include "public/head.html"    %}
+	<title>Exchange_rate</title>
+	{% include "public/head.html" %}
+	<style>
+		@import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
+		/* font-family: 'Jeju Gothic', serif; */
+		@import url(http://fonts.googleapis.com/earlyaccess/nanumpenscript.css);
+		/* font-family: 'Nanum Pen Script', serif; */
+		@import url(http://fonts.googleapis.com/earlyaccess/hanna.css);
+		/* font-family: 'Hanna', serif; */
+		@import url(http://fonts.googleapis.com/earlyaccess/nanumbrushscript.css);
+		/* font-family: 'Nanum Brush Script', serif; */
+		@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+
+		/* font-family: 'Nanum Gothic', serif; */
+
+		table {
+			overflow-x: auto;
+		}
+		table.type11 {
+			border-collapse: separate;
+			border-spacing: 1px;
+			text-align: center;
+			line-height: 1.5;
+			margin: 20px 10px;
+		}
+
+		table.type11 th {
+			width: 155px;
+			padding: 10px;
+			font-weight: bold;
+			vertical-align: top;
+			color: #fff;
+			background: #ce4869;
+		}
+
+		table.type11 td {
+			width: 155px;
+			padding: 10px;
+			vertical-align: top;
+			border-bottom: 1px solid #ccc;
+			background: #eee;
+		}
+	</style>
 </head>
 
-<body class="hold-transition sidebar-mini layout-fixed">
-  <div class="wrapper">
-    {% include 'public/nav.html'    %}
-    {% include 'public/menu.html'   %}
-    {% include 'subPages/exchange.html' %}
-    {% include "public/footer.html" %}
-    {% include 'public/aside.html'  %}
-  </div>
+<body>
+	<div class="page-wrap" id="root">
+
+		<!-- header -->
+		{% include "public/header.html" %}
+
+		<!-- Content-->
+		<div class="wil-content">
+			<!-- Section -->
+			<section class="awe-section">
+				<div class="container">
+
+					<!-- page-title -->
+					<div class="page-title pb-40">
+						<h2 class="page-title__title">Exchange Rate</h2>
+						<p class="page-title__text" style="font-family: Nanum Pen Script; font-size: 25px;">환율은 주식을 사는 타이밍에 중요한 지표가
+							된다</p>
+						<div class="page-title__divider"></div>
+					</div><!-- End / page-title -->
+
+				</div>
+			</section>
+			<!-- End / Section -->
+
+			<!-- Section -->
+			<section class="awe-section bg-gray">
+				<div class="container">
+					<table class="type11">
+						<thead>
+							<tr style="font-family: Jeju Gothic; font-size: larger; font-weight: 100;">
+								{% for key in exchange_rate[0].keys() %}
+									{% if key != 'info_link' %}
+										<th scope="cols">{{key}}</th>
+									{% endif %}
+								{% endfor %}
+							</tr>
+						</thead>
+						<tbody>
+							{% for exchange in exchange_rate %}
+							<tr style="font-family: Nanum Gothic; font-weight: bold;">
+								<td>
+								<a href= "https://finance.naver.com/{{exchange.info_link}}" >{{exchange.name}}</a></td>
+								<td>{{exchange.code}}</td>
+								<td>{{exchange.buy_std}}</td>
+								<td>{{exchange.buy_cash}}</td>
+								<td>{{exchange.sell_cash}}</td>
+								<td>{{exchange.send_cash}}</td>
+								<td>{{exchange.get_cash}}</td>
+								<td>{{exchange.USD_rate}}</td>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+					<div>
+						<div class="work-detail__entry">
+						</div>
+					</div><!-- End /  -->
+
+					<div class="awe-text-center mt-50">
+						<a class="md-btn md-btn--outline-primary " href="{{url_for('home')}}">Home
+						</a>
+					</div>
+				</div>
+			</section>
+			<!-- End / Section -->
+		</div>
+		<!-- End / Content-->
+		<!-- footer -->
+		{% include "public/footer.html" %}
+	</div>
+	<!-- Vendors-->
+	{% include "public/vendors.html" %}
 </body>
 
 </html>
