@@ -3,7 +3,47 @@
 	<head>
 		<title>Index</title>
 		{% include "public/head.html" %}
-		{% include "public/font.html" %}
+		<style>
+			@import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
+			/* font-family: 'Jeju Gothic', serif; */
+			@import url(http://fonts.googleapis.com/earlyaccess/nanumpenscript.css);
+			/* font-family: 'Nanum Pen Script', serif; */
+			@import url(http://fonts.googleapis.com/earlyaccess/hanna.css);
+			/* font-family: 'Hanna', serif; */
+			@import url(http://fonts.googleapis.com/earlyaccess/nanumbrushscript.css);
+			/* font-family: 'Nanum Brush Script', serif; */
+			@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+	
+			/* font-family: 'Nanum Gothic', serif; */
+	
+			table {
+				overflow-x: auto;
+			}
+			table.type11 {
+				border-collapse: separate;
+				border-spacing: 1px;
+				text-align: center;
+				line-height: 1.5;
+				margin: 20px 10px;
+			}
+	
+			table.type11 th {
+				width: 155px;
+				padding: 10px;
+				font-weight: bold;
+				vertical-align: top;
+				color: #fff;
+				background: #ce4869;
+			}
+	
+			table.type11 td {
+				width: 155px;
+				padding: 10px;
+				vertical-align: top;
+				border-bottom: 1px solid #ccc;
+				background: #eee;
+			}
+		</style>
 	</head>
 	
 	<body>
@@ -33,9 +73,38 @@
 				<!-- Section -->
 				<section class="awe-section bg-gray">
 					<div class="container">
-						
-						<!--  -->
-						<div>
+						<table class="type11">
+							<thead>
+								<tr style="font-family: Jeju Gothic; font-size: larger; font-weight: 100;">
+									{% for key in market_index[0].keys() %}
+										{%if key !='보합' %}
+											<th scope="cols">{{key}}</th>
+										{% else %}
+											{% break %}
+										{% endif %}
+									{% endfor %}
+								</tr>
+							</thead>
+							<tbody>
+								{% for index in market_index %}
+								<tr style="font-family: Nanum Gothic; font-weight: bold;">
+									<td>{{index.지수명}}</td>
+									<td>{{index.현재가}}</td>
+									<td>{{index.전일비}}</td>
+									<td>{{index['등락률(%)']}}</td>
+									<td>{{index.시가지수}}</td>
+									<td>{{index.고가지수}}</td>
+									<td>{{index.저가지수}}</td>
+									<td>{{index.전체종목수}}</td>
+									<td>{{index.거래종목수}}</td>
+									<td>{{index.상승}}</td>
+									<td>{{index.상한}}</td>
+									<td>{{index.하락}}</td>
+									<td>{{index.하한}}</td>
+								</tr>
+								{% endfor %}
+							</tbody>
+						</table>
 							<div class="work-detail__entry">
 							</div>
 						</div><!-- End /  -->

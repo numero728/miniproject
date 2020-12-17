@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, url_for
 from db.db_query import *
 
 app = Flask(__name__)
+app.jinja_env.add_extension('jinja2.ext.loopcontrols')
 
 @app.route('/')
 def home():
@@ -22,7 +23,10 @@ def exchange():
 
 @app.route('/index')
 def index():
-  return render_template('kospi.html')
+  curPage = 1 if not request.args.get('pageNo') else int(request.args.get('pageNo'))
+  amt     = 10 if not request.args.get('amt') else int(request.args.get('amt'))
+  rows = db_selectIndexList(curPage, amt)
+  return render_template('kospi.html', market_index = rows)
 
 @app.route('/chat')
 def chat():
