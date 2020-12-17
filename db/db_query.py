@@ -175,4 +175,4 @@ def youtube_query():
 
 if __name__ == '__main__':
     data=index_query()
-    print(db_selectIndexList())
+    print(db_selectIndexList(16, 10)==())
