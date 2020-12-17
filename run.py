@@ -25,14 +25,23 @@ if True:
         username = data['username']
         msg = f'{username}님이 입장하셨습니다.'
         emit('s_send_msg', {'user': 'admin', 'msg': msg}, broadcast=True)
-
+        for msg_boom in msg_pack:
+            emit('s_send_msg',{'user':msg_boom['user'],'msg':msg_boom['msg']},broadcast=True)
     # 7. 유저 송신한 메시지 수신 및 중계
 
     @socketio.on('c_send_msg')
     def c_send_msg(data):
-        username = data['username']
-        msg = data['msg']
-        emit('s_send_msg', {'user': username, 'msg': msg}, broadcast=True)
+        if data['msg']:
+            username = data['username']
+            msg = data['msg']
+            emit('s_send_msg', {'user': username, 'msg': msg}, broadcast=True)
+            if len(msg_pack)>100:
+                msg_pack=msg_pack[1:]
+                msg_pack.append({'user':username,'msg':msg})
+            else:
+                msg_pack.append({'user':username,'msg':msg})
+        else:
+            pass
 
     # 9. 유저 이탈
 
