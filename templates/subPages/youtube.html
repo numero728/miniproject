@@ -1,56 +1,56 @@
 <div class="content-wrapper">
-{%include 'subpublic/youtube_header.html'%}
+  {%include 'subpublic/youtube_header.html'%}
 
   <section class="content">
-    <div class="container-fluid">            
-        <div class="row">
-            <div class="col-lg-12 col-6">
-                <div>
-                    <fieldset>
-
-                        <!-- <script>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-12 col-6">
+          <div>
+            <fieldset>
+              <!-- <script>
                           $('[name=sector]').on('change',()=>{
                             var sector=$('[name=sector]').val()
                             console.log(sector);
                             document.location.href=`/news?sector=${sector}`;
                           })
                         </script> -->
-                        <ul id='results'>
-                        </ul>
-                    </fieldset>
-
+              <ul id="results"></ul>
+            </fieldset>
+          </div>
+          <table border="1">
+            <thead>
+              <tr>
+                <div style='background: #e77579; border: 2px solid #e66465;'>
+                  <th style='font-size: 24px; font-weight: bold; text-align: center; color: black;'></thstyle>순위</th>
+                  <th style='font-size: 24px; font-weight: bold; text-align: center; color: black;'></thstyle>썸네일</th>
+                  <th style='font-size: 24px; font-weight: bold; text-align: center; color: black;'></thstyle>제목(링크연결을 아직..)</th>
                 </div>
-                <table border='1'>
-                    <thead>
-                        <tr>
-                  {%for k in result[0].keys()%}
-                  <th>
-                    {{k}}
-                  </th>
-                  {%endfor%}
-                        </tr>
-                    </thead>    
-                    <tbody>
-                      {% for dic in result %}
-                          <tr>
-                            {%for v in dic.values()%}
-                            <td>
-                              {{v}}
-                            </td>
-                            {%endfor%}
-                          </tr>
-                        {% endfor %}                            
-                    </tbody>
-                </table>
-            </div>
-        
-        </div>
-        <div style='margin:auto;'class="card-footer clearfix">
+              </tr>
+            </thead>
+            <tbody>
+              {% for dic in result %}
+              <tr>
 
+
+                <!-- <td style='text-align: center;'></td><img src="{{dic.n}}" /></td>
+                <td style='text-align: center;'></td>href="{{dic.v}}">{{dic.t}}</td> -->
+                <td >혹시 순위 어떻게 넣나요??</td>
+                <td ><img src="{{dic.n}}" /></td>
+                <td href="{{[dic.v]}}">{{dic.t}}</td>
+
+                <!-- <td><img src="{{dic.n}}" /></td>
+                <td>{{dic.t}}</td>
+                <td>{{dic.v}}</td> -->
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
         </div>
+      </div>
+      <div style="margin: auto" class="card-footer clearfix"></div>
     </div>
     <!-- /.container-fluid -->
-</section>
-<!-- /.content -->
+  </section>
+  <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->

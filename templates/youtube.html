@@ -1,18 +1,91 @@
 <!DOCTYPE html>
-<html lang="kr">
+<html>
+  <head>
+    <title>Work</title>
+    {% include "public/head.html" %}
+  </head>
 
-<head>
-  <title>YaNeoDoo - 파이썬 미니프로젝트 2조</title>
-    {%include "public/head.html"      %}
-</head>
+  <body>
+    <div class="page-wrap" id="root">
+      <!-- header -->
+      {% include "public/header.html" %}
 
-<body class="hold-transition sidebar-mini layout-fixed">
-  <div class="wrapper">
-    {% include 'public/menu.html'      %}
-    {% include 'subPages/youtube.html' %}
-    {% include "public/footer.html"    %}
-    {% include 'public/aside.html'     %}
-  </div>
-</body>
+      <!-- Content-->
+      <div class="wil-content">
+        <!-- Section -->
+        <section class="awe-section">
+          <div class="container">
+            <!-- page-title -->
+            <div class="page-title pb-40">
+              <h2 class="page-title__title">유튜브 컨텐츠</h2>
+              <p class="page-title__text">일간 조회수 상위 20</p>
+              <div class="page-title__divider"></div>
+            </div>
+            <!-- End / page-title -->
+          </div>
+        </section>
+        <!-- End / Section -->
 
+        <!-- Section -->
+        <section class="awe-section bg-gray">
+          <div class="container">
+            <div
+              class="grid-css grid-css--masonry"
+              data-col-lg="3"
+              data-col-md="2"
+              data-col-sm="2"
+              data-col-xs="1"
+              data-gap="30"
+            >
+              <div class="grid__inner">
+                <div class="grid-sizer"></div>
+                <!-- 영상 1-->
+                {% for dic in youtube %}
+                <div class="grid-item">
+                  <div class="grid-item__inner">
+                    <div class="grid-item__content-wrapper">
+                      <!-- work -->
+                      <div class="work">
+                        <a href="{{dic.v}}">
+                          <!--여기는 링크-->
+                          <!-- hoverbox ef-slide-top -->
+                          <div class="hoverbox ef-slide-top light">
+                            <!-- hb_front -->
+                            <div class="hb_front"><img src="{{dic.n}}" /></div>
+                            <!--여기는 썸네일-->
+                            <!-- End / hb_front -->
+
+                            <!-- hb_back -->
+                            <div class="hb_back">
+                              <h2 class="work__title">{{dic.t}}</h2>
+                              <!--여기는 영상제목-->
+                              <span class="work__text">View detail</span>
+                            </div>
+                            <!-- End / hb_back -->
+                          </div>
+                          <!-- End / hoverbox ef-slide-top -->
+                        </a>
+                      </div>
+                      <!-- End / work -->
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+            <div class="awe-text-center mt-50">
+              <a class="md-btn md-btn--outline-primary" href="#">more work </a>
+            </div>
+          </div>
+        </section>
+        <!-- End / Section -->
+      </div>
+      <!-- End / Content-->
+
+      <!-- footer -->
+      {% include "public/footer.html" %}
+    </div>
+    <!-- Vendors-->
+    {% include "public/vendors.html" %}
+  </body>
 </html>
