@@ -22,7 +22,7 @@ if True:
   def username(data):
       username = data['username']
       msg = f'{username}님이 입장하셨습니다.'
-      emit('system_msg', {'user': 'admin', 'msg': msg}, broadcast=True)
+      emit('s_send_msg', {'user': 'admin', 'msg': msg}, broadcast=True)
 
   # 7. 유저 송신한 메시지 수신 및 중계
 
