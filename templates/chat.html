@@ -559,8 +559,8 @@
 												class='fas fa-door-closed'></i></button></span></th>
 							</tr>
 						</thead>
-            <tbody>
-              <tr style='display:block;'><td style='display:block;width:100%;height:600px;overflow-y:scroll;' colspan='2'> <div id='chatbox'></div>
+            <tbody class='move'>
+              <tr style='display:block;'><td class='move' style='display:block;width:100%;height:600px;overflow-y:scroll;' colspan='2'> <div id='chatbox'></div>
               </td></tr>
 						</tbody>
 						<tfoot style='display:inlinde;border:none'>
@@ -637,9 +637,11 @@
           <div class="direct-chat-text">${msg}</div>`;
           }
 
-          $('#chatbox').append( msghtml ).stop().animate({
-            scrollTop:$('#chatbox')[0].scrollHeight
-          }, 1000)
+          $('#chatbox').append( msghtml )
+          var scrollloc=$('.move');
+          console.log(scrollloc.scrollTop)
+          console.log(scrollloc.scrollHeight)
+          $('.move').scrollTop($('.move')[0].scrollHeight);
         })
 
         })
