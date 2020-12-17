@@ -78,13 +78,23 @@
 			<section class="awe-section bg-gray">
 				<div class="container">
 					<div class="dataTables_paginate paging_simple_numbers" id="example2_paginate">
+						<!-- 페이지 넘어가기 구간-->
 						<ul class="paging">
+							<!-- {{ paging }} -->
 							<li style="display: inline-block; font-size: 60px;">
-								<a id='previous' href="#">«</a>
+								{% if paging.prePage: %}
+									<a id='previous' href="{{ url_for('index') }}?PageNo={{ paging.prePage }}&amt={{ paging.amt }}">«</a>
+								{% else %}
+									<a id='previous' href="javascript:alert('첫 페이지 입니다');">«</a>
+								{% endif %}
 							</li>
-							&nbsp &nbsp &nbsp &nbsp
+							<!-- &nbsp &nbsp &nbsp &nbsp -->
 							<li style="display: inline-block; font-size: 60px;">
-								<a id='next' href="#"> » </a>
+								{% if paging.nextPage: %}
+									<a id='next' href="{{ url_for('index') }}?PageNo={{ paging.nextPage }}&amt={{ paging.amt }}"> » </a>
+								{% else %}
+									<a id='next' href="javascript:alert('마지막 페이지 입니다');">»</a>
+								{% endif %}
 							</li>
 						</ul>
 							<!-- <script>
@@ -107,13 +117,8 @@
 								<th scope="cols">시가지수</th>
 								<th scope="cols">고가지수</th>
 								<th scope="cols">저가지수</th>
-								<th scope="cols">저가지수</th>
 								<th scope="cols">전체종목수</th>
 								<th scope="cols">거래종목수</th>
-								<th scope="cols">상승</th>
-								<th scope="cols">상한</th>
-								<th scope="cols">하락</th>
-								<th scope="cols">하한</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -128,10 +133,6 @@
 								<td>{{index.저가지수}}</td>
 								<td>{{index.전체종목수}}</td>
 								<td>{{index.거래종목수}}</td>
-								<td>{{index.상승}}</td>
-								<td>{{index.상한}}</td>
-								<td>{{index.하락}}</td>
-								<td>{{index.하한}}</td>
 							</tr>
 							{% endfor %}
 						</tbody>
