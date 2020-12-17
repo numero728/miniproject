@@ -17,7 +17,10 @@ def about():
 
 @app.route('/news')
 def news():
-  return render_template('news.html')
+  main_news = news_query()
+  news_count = len(main_news)
+  print(news_count)
+  return render_template('news.html', news_count = news_count, main_news = main_news)
 
 
 @app.route('/exchange')

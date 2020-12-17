@@ -15,7 +15,7 @@ def news_query():
 
 
         with conn.cursor() as cursor:
-            sql=f"SELECT * FROM main_news;"
+            sql=f"SELECT * FROM main_news3;"
             cursor.execute(sql)
             data=cursor.fetchall()
     except Exception as e:
@@ -175,4 +175,4 @@ def youtube_query():
 
 if __name__ == '__main__':
     data=index_query()
-    print(db_selectIndexList(16, 10)==())
+    print(len(news_query()))

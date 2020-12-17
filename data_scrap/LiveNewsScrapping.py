@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[13]:
+# In[1]:
 
 
 from bs4 import BeautifulSoup
@@ -10,14 +10,14 @@ import requests
 from datetime import datetime
 
 
-# In[14]:
+# In[2]:
 
 
 now_date = datetime.today().strftime("%Y-%m-%d")
 # print(now_date)
 
 
-# In[15]:
+# In[3]:
 
 
 target_site = f'https://finance.naver.com/news/mainnews.nhn?date={now_date}'
@@ -25,38 +25,41 @@ target_site = f'https://finance.naver.com/news/mainnews.nhn?date={now_date}'
 res = requests.get(target_site)
 
 
-# In[20]:
+# In[4]:
 
 
 soup = BeautifulSoup(res.text, 'html5lib')
 
 
-# In[21]:
+# In[5]:
 
 
 main_news = soup.select('div.mainNewsList > ul > li')
 
 
-# In[54]:
+# In[13]:
 
 
 results = list()
 for news in main_news:
+    time = news.select_one('span.wdate')
     if not news.a.string:
         tmp = news.select_one('dl > dd.articleSubject > a')
         dic = {
             'title' : tmp.string
             ,'href': 'https://finance.naver.com' + tmp.get('href')
+            ,'time': time.string
         }
     else:
         dic = {
             'title' : news.a.string
             ,'href': 'https://finance.naver.com' + news.a.get('href')
+            ,'time': time.string
         }
     results.append(dic)
 
 
-# In[55]:
+# In[9]:
 
 
 import pandas as pd
@@ -66,7 +69,7 @@ from sqlalchemy import create_engine
 import pandas.io.sql as pSql
 
 
-# In[56]:
+# In[10]:
 
 
 protocal = 'mysql+pymysql'
@@ -78,13 +81,13 @@ database = 'yaneodoo'
 db_url = f'{protocal}://{user}:{password}@{domain}:{port}/{database}'
 
 
-# In[57]:
+# In[11]:
 
 
 df = pd.DataFrame(results)
 
 
-# In[58]:
+# In[12]:
 
 
 engine = create_engine(db_url, encoding = 'utf8')
