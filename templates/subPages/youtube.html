@@ -1,46 +1,56 @@
 <div class="content-wrapper">
-  {%include 'subpublic/youtube_header.html'%}
+{%include 'subpublic/youtube_header.html'%}
 
   <section class="content">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-lg-12 col-6">
-          <div>
-            <fieldset>
-              <!-- <script>
+    <div class="container-fluid">            
+        <div class="row">
+            <div class="col-lg-12 col-6">
+                <div>
+                    <fieldset>
+
+                        <!-- <script>
                           $('[name=sector]').on('change',()=>{
                             var sector=$('[name=sector]').val()
                             console.log(sector);
                             document.location.href=`/news?sector=${sector}`;
                           })
                         </script> -->
-              <ul id="results"></ul>
-            </fieldset>
-          </div>
-          <table border="1">
-            <thead>
-              <tr>
-                <th>title</th>
-                <th>thumbnail</th>
-                <th>url</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for dic in result %}
-              <tr>
-                <td>{{dic.t}}</td>
-                <td>{{dic.n}}</td>
-                <td>{{dic.v}}</td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
+                        <ul id='results'>
+                        </ul>
+                    </fieldset>
+
+                </div>
+                <table border='1'>
+                    <thead>
+                        <tr>
+                  {%for k in result[0].keys()%}
+                  <th>
+                    {{k}}
+                  </th>
+                  {%endfor%}
+                        </tr>
+                    </thead>    
+                    <tbody>
+                      {% for dic in result %}
+                          <tr>
+                            {%for v in dic.values()%}
+                            <td>
+                              {{v}}
+                            </td>
+                            {%endfor%}
+                          </tr>
+                        {% endfor %}                            
+                    </tbody>
+                </table>
+            </div>
+        
         </div>
-      </div>
-      <div style="margin: auto" class="card-footer clearfix"></div>
+        <div style='margin:auto;'class="card-footer clearfix">
+
+        </div>
     </div>
     <!-- /.container-fluid -->
-  </section>
-  <!-- /.content -->
+</section>
+<!-- /.content -->
 </div>
 <!-- /.content-wrapper -->

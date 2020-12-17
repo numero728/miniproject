@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Index</title>
+		{% include "public/head.html" %}
+		{% include "public/font.html" %}
+	</head>
+	
+	<body>
+		<div class="page-wrap" id="root">
+			
+			<!-- header -->
+			{% include "public/header.html" %}
+			<!-- Content-->
+			<div class="wil-content">
+				
+				<!-- Section -->
+				<section class="awe-section">
+					<div class="container">
+						
+						<!-- page-title -->
+						<div class="page-title pb-40">
+							<h2 class="page-title__title">Main Index</h2>
+							<p class="page-title__text" style="font-family: Nanum Pen Script; font-size: 25px;">주요 증시 흐름의 체크는 기본이다! </p>
+							<div class="page-title__divider"></div>
+						</div><!-- End / page-title -->
+						
+					</div>
+				</section>
+				<!-- End / Section -->
+				
+				
+				<!-- Section -->
+				<section class="awe-section bg-gray">
+					<div class="container">
+						
+						<!--  -->
+						<div>
+							<div class="work-detail__entry">
+							</div>
+						</div><!-- End /  -->
+						
+						<div class="awe-text-center mt-50">
+							<a class="md-btn md-btn--outline-primary " href="{{url_for('home')}}">Home
+							</a>
+						</div>
+					</div>
+				</section>
+				<!-- End / Section -->
+				
+			</div>
+			<!-- End / Content-->
+			
+			<!-- footer -->
+			{% include "public/footer.html" %}
+			
+		</div>
+		<!-- Vendors-->
+		{% include "public/vendors.html" %}
+	</body>
+</html>
