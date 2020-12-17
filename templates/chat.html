@@ -551,29 +551,26 @@
 			<!-- Section -->
 			<section class="awe-section bg-gray">
 				<div class="container">
-					<table style=''class="type11">
+					<table style='margin:auto;width:80%;min-width:300px;'class="type11">
 						<thead>
 							<tr style="font-family: Jeju Gothic; font-size: larger; font-weight: 100;">
-								<th style='text-align:center;' colspan='2'><span>Chat Room<button
+								<th style='text-align:center;'><span>Chat Room<button
 											style='float:right;background:none;border:0' id='enter_btn'
 											><i id='icon_door'style='float:right;margin-right:5px;'
 												class='fas fa-door-closed'></i></button></span></th>
 							</tr>
 						</thead>
-						<tbody style=''>
-							<tr style="font-family: Nanum Gothic; font-weight: bold;">
-								<td colspan='2'>
-									<div id='chatbox'></div>
-								</td>
-							</tr>
+            <tbody>
+              <tr style='display:block;'><td style='display:block;width:100%;height:600px;overflow:scroll;' colspan='2'> <div id='chatbox'></div>
+              </td></tr>
 						</tbody>
-						<tfoot style='border:none'>
+						<tfoot style='display:inlinde;border:none'>
 							<tr>
-								<td style=';'> <input name='message' type='hidden' placeholder='메시지를 입력하세요.'>
-								</td>
-								<td style=';'> <button id='send_btn' style='border:none;'><i class='fas fa-share'></i></button>
-								</td>
-							</tr>
+								<td style='vertical-align:middle;'><span style='display:inline-block;width:90%;float:left'><input name='message' type='hidden' placeholder='메시지를 입력하세요.'></span>
+                  <span style='display:flex;vertical-align:bottom;'><button id='send_btn' style='margin:auto;width:auto;vertical-align:middle;height:200%;border:none;display:inline-block;;'>
+                    <i style='margin:auto;width:auto;height:100%;'class='fas fa-share'></i></button></span>
+                </td>
+\							</tr>
 
 						</tfoot>
 					</table>
