@@ -74,14 +74,17 @@
 			<!-- Section -->
 			<section class="awe-section bg-gray">
 				<div class="container">
+					<p style="font-family: Jeju Gothic; font-weight: bold;">&nbsp &nbsp {{exchange_rate[0].meta}} 기준</p>
 					<table class="type11">
 						<thead>
-							<tr style="font-family: Jeju Gothic; font-size: larger; font-weight: 100;">
-								{% for key in exchange_rate[0].keys() %}
-									{% if key != 'info_link' %}
-										<th scope="cols">{{key}}</th>
-									{% endif %}
-								{% endfor %}
+							<tr style="font-family: Nanum Gothic; font-size: larger; font-weight: lighter;">
+								<th>통화명</th>
+								<th>매매기준율</th>
+								<th>(현찰)<br>사실 때</th>
+								<th>(현찰)<br>파실 때</th>
+								<th>(송금)<br>보내실 때</th>
+								<th>(송금)<br>받으실 때</th>
+								<th>미화환산율</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -89,7 +92,6 @@
 							<tr style="font-family: Nanum Gothic; font-weight: bold;">
 								<td>
 								<a href= "https://finance.naver.com/{{exchange.info_link}}" >{{exchange.name}}</a></td>
-								<td>{{exchange.code}}</td>
 								<td>{{exchange.buy_std}}</td>
 								<td>{{exchange.buy_cash}}</td>
 								<td>{{exchange.sell_cash}}</td>
