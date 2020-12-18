@@ -53,7 +53,7 @@ if True:
                 else:
                     query_msg='잘못된 코드입니다.'
                 emit('s_send_msg', {'user': username, 'msg': msg}, broadcast=True)
-                emit('s_send_msg', {'user': username, 'msg': query_msg})
+                emit('s_send_msg', {'user': username, 'msg': query_msg}, broadcast=True)
             else:
                 emit('s_send_msg', {'user': username, 'msg': msg}, broadcast=True)
         else:
