@@ -26,9 +26,8 @@ if True:
     def username(data):
         username = data['username']
         msg = f'{username}님이 입장하셨습니다.'
-        emit('s_send_msg', {'user': 'admin', 'msg': msg}, broadcast=True)
+        emit('system_msg', {'user': 'admin', 'msg': msg}, broadcast=True)
  
-    # 7. 유저 송신한 메시지 수신 및 중계
 
     @socketio.on('c_send_msg')
     def c_send_msg(data):
@@ -53,7 +52,7 @@ if True:
                 else:
                     query_msg='잘못된 코드입니다.'
                 emit('s_send_msg', {'user': username, 'msg': msg}, broadcast=True)
-                emit('s_send_msg', {'user': username, 'msg': query_msg}, broadcast=True)
+                emit('system_msg', {'user': username, 'msg': query_msg}, broadcast=True)
             else:
                 emit('s_send_msg', {'user': username, 'msg': msg}, broadcast=True)
         else:

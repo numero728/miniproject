@@ -720,9 +720,31 @@
                   <div class="direct-chat-infos clearfix">
                   <span class="direct-chat-name float-left">${sender}</span>
                   <span class="direct-chat-timestamp float-right">${new Date()}</span></div>
-                  <img class="direct-chat-img" src="static/dist/img/PusanLogo.jpg" alt="message user image">
+                  <img class="direct-chat-img" src="static/dist/img/unknown.png" alt="message user image">
                   <div class="direct-chat-text">${msg}</div>`;
                   }
+
+                  $("#chatbox").append(msghtml);
+                  var scrollloc = $("td.move");
+                  console.log(scrollloc.scrollTop);
+                  console.log(scrollloc.scrollHeight);
+                  $("td.move").scrollTop($("td.move")[0].scrollHeight);
+                });
+              
+                socket.on("system_msg", (data) => {
+                  var sender = decodeURI(data.user);
+                  var msg = decodeURI(data.msg);
+                  console.log(sender);
+                  console.log(username);
+
+                  var msghtml = `
+                  <div class="direct-chat-msg">
+                  <div class="direct-chat-infos clearfix">
+                  <span class="direct-chat-name float-left">${sender}</span>
+                  <span class="direct-chat-timestamp float-right">${new Date()}</span></div>
+                  <img class="direct-chat-img" src="static/dist/img/PusanLogo.jpg" alt="message user image">
+                  <div class="direct-chat-text">${msg}</div>`;
+                  
 
                   $("#chatbox").append(msghtml);
                   var scrollloc = $("td.move");
