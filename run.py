@@ -2,6 +2,8 @@ from flask import Flask, render_template, request, url_for, session
 from db.db_query import *
 from flask_socketio import SocketIO, emit
 from datetime import datetime
+from urllib.parse import unquote
+import re
 
 
 app = Flask(__name__)
@@ -33,7 +35,27 @@ if True:
         if data['msg']:
             username = data['username']
             msg = data['msg']
-            emit('s_send_msg', {'user': username, 'msg': msg}, broadcast=True)
+            msg_=unquote(msg, encoding='utf-8')
+            mat=re.match('(\d{6})',msg_)
+            stock_code=mat.group(0) if mat!=None else False
+            if stock_code:
+                result=chat_query(stock_code)
+                print(result)
+                print(result)
+                print(result)
+
+                if result:
+                    pack=[]
+                    for k,v in result.items():
+                        row_=k+' : '+str(v)
+                        pack.append(row_)
+                    query_msg='\n\n'.join(pack)
+                else:
+                    query_msg='잘못된 코드입니다.'
+                emit('s_send_msg', {'user': username, 'msg': msg}, broadcast=True)
+                emit('s_send_msg', {'user': username, 'msg': query_msg})
+            else:
+                emit('s_send_msg', {'user': username, 'msg': msg}, broadcast=True)
         else:
             pass
 
