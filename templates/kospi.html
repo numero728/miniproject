@@ -117,8 +117,14 @@
 							<tr style="font-family: Nanum Gothic; font-weight: bold;">
 								<td>{{index.지수명}}</td>
 								<td>{{index.현재가}}</td>
-								<td>{{index.전일비}}</td>
-								<td>{{index['등락률(%)']}}</td>
+								<td >{{index.전일비}}</td>
+								{% if ('-' in index['등락률(%)']) and '-' != index['등락률(%)'] %}
+								<td style="color: blue;">▼{{index['등락률(%)']}}</td>
+								{% elif '-' != index['등락률(%)'] %}
+								<td style="color: red;">▲{{index['등락률(%)']}}</td>
+								{% else %}
+								<td >{{index['등락률(%)']}}</td>
+								{% endif %}
 								<td>{{index.시가지수}}</td>
 								<td>{{index.고가지수}}</td>
 								<td>{{index.저가지수}}</td>
