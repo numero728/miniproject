@@ -107,6 +107,12 @@ def index():
 def chat():
     return render_template('chat.html')
 
+@app.route('/chat/codelist')
+def codelist():
+    codelist = code_query()
+    return render_template('codelist.html', codelist=codelist)
+
+
 
 @app.route('/youtube')
 def youtube():

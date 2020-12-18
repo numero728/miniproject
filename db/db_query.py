@@ -172,6 +172,28 @@ def youtube_query():
         conn.close()
         return(data)
     
+def code_query():
+    conn=0
+    try:
+        conn=pymysql.connect(
+            host='personaldb.cepsu2i8bkn5.ap-northeast-2.rds.amazonaws.com',
+            user='admin',
+            password='pnudb960726!',
+            port=3306,
+            db='scrap_data',
+            charset='utf8mb4',
+            cursorclass=pymysql.cursors.DictCursor)
+
+
+        with conn.cursor() as cursor:
+            sql=f"SELECT 종목코드, 회사명 FROM public_corp_list;"
+            cursor.execute(sql)
+            data=cursor.fetchall()
+    except Exception as e:
+        data=False
+    finally:
+        conn.close()
+        return data
 
 def chat_query(stock_code):
     conn=0
@@ -198,4 +220,4 @@ def chat_query(stock_code):
         
 if __name__ == '__main__':
     data=index_query()
-    print(len(news_query()))
+    print(code_query())

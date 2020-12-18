@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>종목별 코드리스트</title>
+  {% include "public/head.html" %}
+  <style>
+		@import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
+		/* font-family: 'Jeju Gothic', serif; */
+		@import url(http://fonts.googleapis.com/earlyaccess/nanumpenscript.css);
+		/* font-family: 'Nanum Pen Script', serif; */
+		@import url(http://fonts.googleapis.com/earlyaccess/hanna.css);
+		/* font-family: 'Hanna', serif; */
+		@import url(http://fonts.googleapis.com/earlyaccess/nanumbrushscript.css);
+		/* font-family: 'Nanum Brush Script', serif; */
+		@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+
+		/* font-family: 'Nanum Gothic', serif; */
+
+		table {
+			overflow-x: auto;
+		}
+		table.type11 {
+			border-collapse: separate;
+			border-spacing: 1px;
+			text-align: center;
+			line-height: 1.5;
+			margin: 20px 10px;
+		}
+
+		table.type11 th {
+			width: 155px;
+			padding: 10px;
+			font-weight: bold;
+			vertical-align: top;
+			color: #fff;
+			background: #ce4869;
+		}
+
+		table.type11 td {
+			width: 155px;
+			padding: 10px;
+			vertical-align: top;
+			border-bottom: 1px solid #ccc;
+			background: #eee;
+		}
+	</style>
+</head>
+<body>
+  <table class="type11">
+    <thead>
+      <tr style="font-family: Jeju Gothic;">
+        <th>회사명</th>
+        <th>종목코드</th>
+      </tr>
+    </thead>
+    <tbody>
+      {%for code in codelist %}
+      <tr style="font-family: Jeju Gothic;">
+        <td>{{code.회사명}}</td>
+        <td>{{code.종목코드}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</body>
+</html>
