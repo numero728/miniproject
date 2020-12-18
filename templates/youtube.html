@@ -2,8 +2,7 @@
 <html>
   <head>
     <title>Videos</title>
-    {% include "public/head.html" %}
-    {% include "public/font.html" %}
+    {% include "public/head.html" %} {% include "public/font.html" %}
   </head>
 
   <body>
@@ -19,7 +18,12 @@
             <!-- page-title -->
             <div class="page-title pb-40">
               <h2 class="page-title__title">Today's Contents</h2>
-              <p class="page-title__text"  style="font-family: Nanum Pen Script; font-size: 25px;">일간 조회수 상위 20</p>
+              <p
+                class="page-title__text"
+                style="font-family: Nanum Pen Script; font-size: 25px"
+              >
+                금일 업로드 조회수 상위 20
+              </p>
               <div class="page-title__divider"></div>
             </div>
             <!-- End / page-title -->
@@ -30,6 +34,9 @@
         <!-- Section -->
         <section class="awe-section bg-gray">
           <div class="container">
+            <p style="font-family: Jeju Gothic; font-weight: bold">
+              {{youtube[0].meta}} 기준
+            </p>
             <div
               class="grid-css grid-css--masonry"
               data-col-lg="3"
@@ -57,13 +64,17 @@
                             <!-- End / hb_front -->
 
                             <!-- hb_back -->
-                            <div class="hb_back" , style="background: #cf7f82">
+                            <div
+                              class="hb_back"
+                              ,
+                              style="background: #fcc7cdfa"
+                            >
                               <h2
                                 class="work__title"
                                 ,
                                 style="
                                   font-size: 16px;
-                                  color: rgb(230, 198, 198);
+                                  color: rgb(255, 255, 255);
                                 "
                                 ;
                               >
@@ -74,10 +85,7 @@
                               <span
                                 class="work__title"
                                 ,
-                                style="
-                                  font-size: 18px;
-                                  color: rgb(255, 255, 255);
-                                "
+                                style="font-size: 20px; color: rgb(165, 37, 37)"
                                 ;
                                 >보러 가기</span
                               >
@@ -95,7 +103,11 @@
               </div>
             </div>
             <div class="awe-text-center mt-50">
-              <a class="md-btn md-btn--outline-primary" href="{{url_for('home')}}">HOME </a>
+              <a
+                class="md-btn md-btn--outline-primary"
+                href="{{url_for('home')}}"
+                >HOME
+              </a>
             </div>
           </div>
         </section>
