@@ -78,10 +78,10 @@ def exchange():
 @app.route('/index')
 def index():
     curPage = 1 if not request.args.get('PageNo') else int(request.args.get('PageNo'))
-    amt     = 10 if not request.args.get('amt') else int(request.args.get('amt'))
+    amt     = 15 if not request.args.get('amt') else int(request.args.get('amt'))
     rows    = db_selectIndexList(curPage, amt)
     # 서버쪽에서 전체 개수를 구해와서, amt양 대비하여 최대 페이지수를 계산해 둬야함 !!
-    maxPage = 15 #임시로 값을 넣었습니다.
+    maxPage = 10 #임시로 값을 넣었습니다.
     return render_template('kospi.html', market_index=rows, 
     paging={'prePage':curPage == 1 if 0 else curPage-1, 'amt':amt, 
             'nextPage': 0 if curPage == maxPage else curPage+1

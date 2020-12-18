@@ -14,9 +14,9 @@
 		@import url(http://fonts.googleapis.com/earlyaccess/nanumbrushscript.css);
 		/* font-family: 'Nanum Brush Script', serif; */
 		@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
-
 		/* font-family: 'Nanum Gothic', serif; */
-
+		@import url(http://fonts.googleapis.com/earlyaccess/jejuhallasan.css);
+		/* font-family: 'Jeju Hallasan', serif; */
 		table {
 			overflow-x: auto;
 		}
@@ -77,27 +77,6 @@
 			<!-- Section -->
 			<section class="awe-section bg-gray">
 				<div class="container">
-					<div class="dataTables_paginate paging_simple_numbers" id="example2_paginate">
-						<!-- 페이지 넘어가기 구간-->
-						<ul class="paging">
-							<!-- {{ paging }} -->
-							<li style="display: inline-block; font-size: 60px;">
-								{% if paging.prePage: %}
-									<a id='previous' href="{{ url_for('index') }}?PageNo={{ paging.prePage }}&amt={{ paging.amt }}">«</a>
-								{% else %}
-									<a id='previous' href="javascript:alert('첫 페이지 입니다');">«</a>
-								{% endif %}
-							</li>
-							<!-- &nbsp &nbsp &nbsp &nbsp -->
-							<li style="display: inline-block; font-size: 60px;">
-								{% if paging.nextPage: %}
-									<a id='next' href="{{ url_for('index') }}?PageNo={{ paging.nextPage }}&amt={{ paging.amt }}"> » </a>
-								{% else %}
-									<a id='next' href="javascript:alert('마지막 페이지 입니다');">»</a>
-								{% endif %}
-							</li>
-						</ul>
-					</div>
 					<table class="type11">
 						<thead>
 							<tr style="font-family: Jeju Gothic; font-weight: 100;">
@@ -115,25 +94,58 @@
 						<tbody>
 							{% for index in market_index %}
 							<tr style="font-family: Nanum Gothic; font-weight: bold;">
-								<td>{{index.지수명}}</td>
-								<td>{{index.현재가}}</td>
-								<td >{{index.전일비}}</td>
-								{% if ('-' in index['등락률(%)']) and '-' != index['등락률(%)'] %}
-								<td style="color: blue;">▼{{index['등락률(%)']}}</td>
-								{% elif '-' != index['등락률(%)'] %}
-								<td style="color: red;">▲{{index['등락률(%)']}}</td>
+								{% if index.현재가 == '-' %}
+									<td style='font-family:Jeju Gothic ;'>{{index.지수명}}</td>
+									<td>{{index.현재가}}</td>
+									<td>{{index.전일비}}</td>
+									<td>{{index['등락률(%)']}}</td>
+									<td>{{index.시가지수}}</td>
+									<td>{{index.고가지수}}</td>
+									<td>{{index.저가지수}}</td>
+									<td style='font-family: Jeju Gothic ;'>{{index.전체종목수}}</td>
+									<td style='font-family: Jeju Gothic ;'>{{index.거래종목수}}</td>
 								{% else %}
-								<td >{{index['등락률(%)']}}</td>
+									<td>{{index.지수명}}</td>
+									<td>{{index.현재가}}</td>
+									<td>{{index.전일비}}</td>
+									{% if ('-' in index['등락률(%)']) %}
+										<td style="color: blue;">▼{{index['등락률(%)']}}</td>
+									{% else %}
+										<td style="color: red;">▲{{index['등락률(%)']}}</td>
+									{% endif %}
+									<td>{{index.시가지수}}</td>
+									<td>{{index.고가지수}}</td>
+									<td>{{index.저가지수}}</td>
+									<td>{{index.전체종목수}}</td>
+									<td>{{index.거래종목수}}</td>
 								{% endif %}
-								<td>{{index.시가지수}}</td>
-								<td>{{index.고가지수}}</td>
-								<td>{{index.저가지수}}</td>
-								<td>{{index.전체종목수}}</td>
-								<td>{{index.거래종목수}}</td>
-							</tr>
+								</tr>
 							{% endfor %}
 						</tbody>
 					</table>
+					<div class="dataTables_paginate paging_simple_numbers" id="example2_paginate">
+						<!-- 페이지 넘어가기 구간-->
+						<ul class="paging">
+							<!-- {{ paging }} -->
+							<li style="display: inline-block; font-size: 30px;">
+								{% if paging.prePage: %}
+									<a id='previous' href="{{ url_for('index') }}?PageNo={{ paging.prePage }}&amt={{ paging.amt }}">◀</a>
+								{% else %}
+									<a id='previous' href="javascript:alert('첫 페이지 입니다');">◀</a>
+								{% endif %}
+							</li>
+							<!-- &nbsp &nbsp &nbsp &nbsp -->
+							<li style="display: inline-block; font-size: 30px;">
+								{% if paging.nextPage: %}
+								<span style="font-family: Jeju Gothic;">{{paging.prePage +1 }} page</span>
+									<a id='next' href="{{ url_for('index') }}?PageNo={{ paging.nextPage }}&amt={{ paging.amt }}"> ▶ </a>
+								{% else %}
+								  <span style="font-family: Jeju Gothic;">{{paging.prePage +1 }} page</span>
+									<a id='next' href="javascript:alert('마지막 페이지 입니다');">▶</a>
+								{% endif %}
+							</li>
+						</ul>
+					</div>
 					<div class="work-detail__entry">
 					</div>
 				</div><!-- End /  -->
