@@ -12,7 +12,6 @@ app.config['SECRET_KEY'] = 'miniproject'
 if True:
     socketio = SocketIO(app, cors_allowed_origins='*', pingInterval=600000,
                         pingTimeout=600000, async_mode='threading', manage_session=False)
-    msg_pack = []
 
     # 2. 유저 접속 수신
     @socketio.on('connect')
@@ -26,8 +25,7 @@ if True:
         username = data['username']
         msg = f'{username}님이 입장하셨습니다.'
         emit('s_send_msg', {'user': 'admin', 'msg': msg}, broadcast=True)
-        for msg_boom in msg_pack:
-            emit('s_send_msg',{'user':msg_boom['user'],'msg':msg_boom['msg']},broadcast=True)
+ 
     # 7. 유저 송신한 메시지 수신 및 중계
 
     @socketio.on('c_send_msg')
@@ -36,11 +34,6 @@ if True:
             username = data['username']
             msg = data['msg']
             emit('s_send_msg', {'user': username, 'msg': msg}, broadcast=True)
-            if len(msg_pack)>100:
-                msg_pack=msg_pack[1:]
-                msg_pack.append({'user':username,'msg':msg})
-            else:
-                msg_pack.append({'user':username,'msg':msg})
         else:
             pass
 
