@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, url_for, session
 from db.db_query import *
 from flask_socketio import SocketIO, emit
+from datetime import datetime
 
 
 app = Flask(__name__)
@@ -64,8 +65,8 @@ def about():
 def news():
   main_news = news_query()
   news_count = len(main_news)
-  print(news_count)
-  return render_template('news.html', news_count = news_count, main_news = main_news)
+  now_date = datetime.today().strftime("%Y.%m.%d")
+  return render_template('news.html', news_count = news_count, main_news = main_news, date=now_date)
 
 
 
