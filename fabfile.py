@@ -1,207 +1,250 @@
-# 1. 모듈 가져오기
-from fabric.contrib.files import append, exists, sed, put
-from fabric.api import env, local, run, sudo
-import os
-import json
+# coding=UTF-8
 
-# 2. 환경변수 관련 사항
+#====================================================================
+# 환경 설정
+if True:
+    # -------------------------------------------------------------------
+    # 모듈 import
+    if True:
+        from fabric.contrib.files import exists
+        from fabric.api import env, local, run, sudo
+        import os
+        import json
+        import re
 
-# 현재 파일이 위치한 디렉토리 경로를 가져와라
-# 리눅스 : /home/ubuntu/deploy
-PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
-# 환경 변수 파일을 읽어서 로드하시오
-envs        = json.load(open(os.path.join(PROJECT_DIR, "deploy.json")))
-# JSON 파일에 기록된 환경변수값들을 읽어서 변수에 담는다
-REPO_URL        = envs['REPO_URL']          # 저장소 위치
-PROJECT_NAME    = envs['PROJECT_NAME']      # 프로젝트 이름
-REMOTE_HOST     = envs['REMOTE_HOST']       # 원격 접속 주소
-REMOTE_HOST_SSH = envs['REMOTE_HOST_SSH']   # 원격 접속 주소(ssh용)
-REMOTE_USER     = envs['REMOTE_USER']       # 원격 서버의 사용자명(ubuntu)
-# envs는 딕셔너리, env.키 = 값  <= env[키]=값
-env.user        = REMOTE_USER
-env.hosts       = [
-    REMOTE_HOST_SSH, # IP
-]
-env.use_ssh_config  = True
-env.port='1024'
-# 서버에 접속하기 위해서 인증키를 위치시킨다(경로 저장)
-env.key_filename    = 'khkkey.pem'
-# 실 프로젝트 폴더
-# /home/ubuntu/deploy
-project_folder      = '/home/{}/{}'.format(env.user, PROJECT_NAME)
-# 리눅스를 새로 세팅하고나서, 초기에 설치해야할 패캐지 목록
-apt_requirements    = [
-    'curl',
-    'git',
-    'python3-dev',
-    'python3-pip',
-    'build-essential',
-    'apache2',
-    'libapache2-mod-wsgi-py3',
-    'python3-setuptools',
-    'libssl-dev',
-    'libffi-dev',
-]
+    # -------------------------------------------------------------------
+    # deploy.json 파일로부터 환경변수 파라미터 호출
+    if True:
+        PROJECT_DIR         =   os.path.dirname(os.path.abspath(__file__))
+        
+        envs                =   json.load(open(os.path.join(PROJECT_DIR,'deploy.json')))
 
-####### 함수 ################ <= 외부용 함수, 페브릭 명령 수행시 수행
-'''
-- 최초 배포(최초 세팅및 초기 배포)
- $ fab new_server
-- 추후 업데이트(코드 수정작업 -> 배포)
- $ fab deploy
-'''
-def new_server():
-    setup()
-    deploy()
+        REPO_URL            =   envs['REPO_URL']
+        PROJECT_NAME        =   envs['PROJECT_NAME']
+        REMOTE_HOST         =   envs['REMOTE_HOST']
+        REMOTE_HOST_SSH     =   envs['REMOTE_HOST_SSH']
+        REMOTE_USER         =   envs['REMOTE_USER']
+        KEY_FILE            =   envs['KEY_FILE']
+        REMOTE_PASSWD       =   envs['REMOTE_PASSWD']
+        REMOTE_PORT         =   envs['REMOTE_PORT']
 
-# 최초 세팅
+    # -------------------------------------------------------------------
+    # 환경변수 설정
+    if True:
+        env.user            =   REMOTE_USER
+        env.hosts           =   [REMOTE_HOST_SSH]
+        env.use_ssh_config  =   True
+        env.key_filename    =   os.path.join(KEY_FILE)
+        env.password        =   REMOTE_PASSWD
+        env.port            =   REMOTE_PORT
+
+    # -------------------------------------------------------------------
+    # 원격지의 프로젝트 폴더 주소 설정
+    if True:
+        PROJECT_FOLDER      =   f'/home/{env.user}/{PROJECT_NAME}'
+
+    # -------------------------------------------------------------------
+    # 필요 apt 패키지 설정
+    if True:
+        # packages.txt 읽기
+        with open(os.path.join(PROJECT_DIR,'packages.txt'),'r') as fp:
+            packages=fp.readlines()
+        apt_requirements=[re.sub('\n','',ln) for ln in packages]
+
+    # -------------------------------------------------------------------
+    # 필요 파이썬 패키지 설정
+    if True:
+        # requirements.txt 읽기
+        with open(os.path.join(PROJECT_DIR,'requirements.txt'),'r') as fp:
+            requirements=fp.readlines()
+        pip_requirements=[re.sub('\n','',ln) for ln in requirements]
+
+#====================================================================
+# 최초 배포
+if True:
+    def new_server():
+        setup()
+        deploy()
+
+# -------------------------------------------------------------------
+# setup
 def setup():
-    # 운영체계상 os 업데이트
+    # os 업데이트
     _get_latest_apt()
-    # os상에서 필요한 패키지 설치
-    _install_apt_requirements(apt_requirements)
-    # flask 구동에 필요한 가상환경 구축
-    _make_virtualenv()
+    print('\n'*3)
+    print('apt update and upgrade done...')
+    print('\n'*3)
 
-# 여러번 반복 수행 가능 -> 배포
+    # apt 패키지 설치
+    _install_apt_requirements(apt_requirements)
+    print('\n'*3)
+    print('install apt packages done...')
+    print('\n'*3)
+
+    # flask 구동 필요한 가상환경 구축
+    _make_virtualenv()
+    print('\n'*3)
+    print('make virtualenv done...')
+    print('\n'*3)
+# -------------------------------------------------------------------
+# deploy
 def deploy():
     _get_latest_source()
-    #_put_envs()
+    print('\n'*3)
+    print('get latest git done...')
+    print('\n'*3)
+
     _update_virtualenv()
+    print('\n'*3)
+    print('update virtualenv done...')
+    print('\n'*3)
+
     _make_virtualhost()
+    print('\n'*3)
+    print('make virtualhost done...')
+    print('\n'*3)
+
     _grant_apache2()
+    print('\n'*3)
+    print('grant apache2 done...')
+    print('\n'*3)
+
     _restart_apache2()
+    print('\n'*3)
+    print('restart apache done...')
+    print('\n'*3)
 
-###### _로시작하는 함수 ######### <= 내부에서만 사용가능
-def _put_envs():
-    pass  # activate for envs.json file
-    # put('envs.json', '~/{}/envs.json'.format(PROJECT_NAME))
-
+    _ufw_allow()
+    print('\n'*3)
+    print('ufw allow done...')
+    print('\n'*3)
+# -------------------------------------------------------------------
+# 최신 버전 apt로 업데이트
 def _get_latest_apt():
+    # 업데이트 여부 확인
     update_or_not = input('would you update?: [y/n]')
     if update_or_not == 'y':
-        # 우분트 리눅스 명령
-        # 패키지 관리자 업데이트, 엄데이트된내용 반영 (각종 패캐지의 최신 저장소 갱신)
-        # 명령어 && 명령어
-        # -y 문의할때 동의한다는 의미(자동처리)
         sudo('apt-get update && apt-get -y upgrade')
 
+# -------------------------------------------------------------------
+# apt 패키지 설치
 def _install_apt_requirements(apt_requirements):
     reqs = ''
-    # 설치할 패키지들을 한칸씩 띠어서 하나의 문자열로 만들고 있다
+    # 설치할 패키지 리스트 -> 하나의 문자열로 변환
     for req in apt_requirements:
         reqs += (' ' + req)
-    # 우분트 리눅스에 구동및 운영에 필요한 모든 패키지를 설치해라
-    # 아파치 서버, 연동모듈, git, 파이썬3,...
-    sudo('apt-get -y install {}'.format(reqs))
+    sudo(f'apt-get -y install {reqs}')
 
+# -------------------------------------------------------------------
+# 가상환경 생성
 def _make_virtualenv():
-    # 현재 디렉토리상에서 .virtualenvs 디렉토리가 존재하지 않으면
+    # 현재 디렉토리에 대해 소유권 선언
+    sudo(f'chown {REMOTE_USER} ~/')
+    sudo(f'chmod -R 775 ~/')
+
+    # 기존 가상환경 존재하는지 확인
+    # 기존 가상환경 없으면 신규로 생성
     if not exists('~/.virtualenvs'):
-        # 리눅스상에서 환경변수를 세팅 명령어(여러줄, 문자열로 여러줄 구성)
+        # 가상환경 디렉토리 생성
+        run('mkdir ~/.virtualenvs')
+
+        # 루트 권한으로 pip 통해 virtualenv, virtualenvwrapper 설치
+        sudo('pip3 install virtualenv virtualenvwrapper')
+        
+        # .bashrc에 가상환경 관련 PATH 등 설정
         script = '''"# python virtualenv settings
                     export WORKON_HOME=~/.virtualenvs
                     export VIRTUALENVWRAPPER_PYTHON="$(command \\which python3)"  # location of python3
+                    export APACHE_LOG_DIR=/home/khk/
                     source /usr/local/bin/virtualenvwrapper.sh"'''
-        # 디렉토리 생성 : run() 운영체계에서 직접 수행
-        run('mkdir ~/.virtualenvs')
-        # sudo() => 리눅수의 관리자 권한은 sudo ... 
-        # 관리자 권한으로 명령어를 수행하겠다
-        # pip =>  python2로 인식, pip3 => python3로 인식
-        # virtualenv => 기본적인 가상환경용 패키지, 아나콘다에 내장
-        sudo('pip3 install virtualenv virtualenvwrapper')
-        # 위에서 작성한 스크립트(패스)를 .bashrc 라는 파일에 추가하시오
-        run('echo {} >> ~/.bashrc'.format(script))
+        
+        # .bashrc 수정
+        run(f'echo {script} >> ~/.bashrc')
 
-# git를 통해서 배포하고자 하는 소스 코드를 내려받는 파트
-def _get_latest_source():
-    # .git가 존재하면
-    if exists(project_folder + '/.git'):
-        # 프로젝트 폴더로 이동
-        # git fetch를 통해서 최신 내용을 긁어온다
-        run('cd %s && git fetch' % (project_folder,))
-    # .git가 없으면
-    else:
-        # 저장소에서 소스를 카피해서 프로젝트 폴더에 둔다
-        run('git clone %s %s' % (REPO_URL, project_folder))
-    
-    # 최신 내용을 서버쪽에 저장
-    current_commit = local("git log -n 1 --format=%H", capture=True)
-    run('cd %s && git reset --hard %s' % (project_folder, current_commit))
-    #run('cd %s && git reset --hard' % (project_folder, ))
+        # .bashrc 실행       
+        run(f'bash /home/{REMOTE_USER}/.bashrc')
 
-def _update_virtualenv():
-    # /home/ubuntu/
-    # .git, .virtualenvs, deploy, ..
-    # 가상환경폴더 => /home/ubuntu/.virtualenvs/deploy 
-    virtualenv_folder = project_folder + '/../.virtualenvs/{}'.format(PROJECT_NAME)
-    # 존재하지 않으면
-    if not exists(virtualenv_folder + '/bin/pip'):
-        # 가상환경을 만들어라
-        run('cd /home/%s/.virtualenvs && virtualenv %s' % (env.user, PROJECT_NAME))
-    
-    # 해당 가상환경에서 사용할 패키지를 설치해라
-    # $ pip install -r requirements.txt
-    run('%s/bin/pip install -r %s/requirements.txt' % (
-        virtualenv_folder, project_folder
-    ))
-
+# -------------------------------------------------------------------
+# 방화벽 허용      
 def _ufw_allow():
     sudo("ufw allow 'Apache Full'")
     sudo("ufw reload")
 
-# 아파치서버 + flask 연동 서비스 운영
-# 연결에 필요한 아파치서버의 환경설정값
-# wsgi.py가 엔트리포인트라는 부분, 포트가 80번(기본 http)
-# 접속 로그, 에러 로그 위치 지정
+# -------------------------------------------------------------------
+# 아파치 서버 환경 설정
 def _make_virtualhost():
-    script = """'<VirtualHost *:80>
-    ServerName {servername}
-    <Directory /home/{username}/{project_name}>
+    # apache2 conf 설정할 내용
+    script = f"""'<VirtualHost *:80>
+    ServerName {REMOTE_HOST}
+    <Directory /home/{REMOTE_USER}/{PROJECT_NAME}>
         <Files wsgi.py>
             Require all granted
         </Files>
     </Directory>
-    WSGIDaemonProcess {project_name} python-home=/home/{username}/.virtualenvs/{project_name} python-path=/home/{username}/{project_name}
-    WSGIProcessGroup {project_name}
-    WSGIScriptAlias / /home/{username}/{project_name}/wsgi.py
+    WSGIDaemonProcess {PROJECT_NAME} python-home=/home/{REMOTE_USER}/.virtualenvs/{PROJECT_NAME} python-path=/home/{REMOTE_USER}/{PROJECT_NAME}
+    WSGIProcessGroup {PROJECT_NAME}
+    WSGIScriptAlias / /home/{REMOTE_USER}/{PROJECT_NAME}/wsgi.py
     
     ErrorLog ${{APACHE_LOG_DIR}}/error.log
     CustomLog ${{APACHE_LOG_DIR}}/access.log combined
     
-    </VirtualHost>'""".format(
-        username=REMOTE_USER,
-        project_name=PROJECT_NAME,
-        servername=REMOTE_HOST,
-    )
-    sudo('echo {} > /etc/apache2/sites-available/{}.conf'.format(script, PROJECT_NAME))
-    sudo('a2ensite {}.conf'.format(PROJECT_NAME))
-    # sudo('a2dissite etc/apache2/sites-available/000-default.conf')
-# 프로젝트 폴더및 아파치 연동된 부분에 관련되 권한 조정
-# 리눅스 상에서 누구나 파일/디렉토리 상에서 엑세스할수 있게(수정포함) 조정
-# chmod 777 파일
-def _grant_apache2():
-    # 디렉토리 및 이하 파일 전부 포함 -> -r
-    # 이 디렉토리(이하 파일까지)의 주인은 
-    sudo('chown -R :www-data ~/{}'.format(PROJECT_NAME))
-    # 이 파일의 권한 조정
-    sudo('chmod -R 775 ~/{}'.format(PROJECT_NAME))
+    </VirtualHost>'"""
 
-# 아파치 서버의 재가동
+    # sudo 명령으로 conf 설정
+    sudo(f'echo {script} > /etc/apache2/sites-available/{PROJECT_NAME}.conf')
+
+    # 프로젝트 활성화
+    sudo(f'a2ensite {PROJECT_NAME}.conf')
+
+    # 디폴트 비활성화
+    # run(f"echo '{REMOTE_PASSWD}' | sudo -S a2dissite /etc/apache2/sites-available/000-default.conf")
+
+# -------------------------------------------------------------------
+# 아파치 서버 권한 설정
+def _grant_apache2():
+    # PROJECT_NAME 디렉토리의 소유권 www-data로 이전
+    # www-data: 아파치 데몬(웹사이트 구동하는 owner)
+    sudo(f'chown -R :www-data ~/{PROJECT_NAME}')
+    
+    # PROJECT_NAME의 권한 조정
+    sudo(f'chmod -R 775 ~/{PROJECT_NAME}')
+
+# -------------------------------------------------------------------
+# 아파치 재시동
 def _restart_apache2():
-    # 루트권한으로 아파치 서버를 재가동하시오
     sudo('service apache2 restart')
 
-####################################################
-# 파이썬으로 웹으로 개발해서 배포하고 운영하는 절차 ###########
-# 크게 흐름을 이해하시면 된다
-# git 생성
-# 개발
-# 개발된 코드는 git에 최신소스 반영
-# 최초 세팅및 배포
-# fab new_server
-# 계속 반복
-    # 추가개발
-    # 개발된 코드는 git에 최신소스 반영
-    # fab deploy를 통해서 서버에 최신 버전 반영, 오픈 
-####################################################
+# -------------------------------------------------------------------
+# 최신 버전의 저장소 내용으로 업데이트
+def _get_latest_source():
+    # .git 파일 유무 확인
+    # .git 파일 있으면 fetch로 업데이트 
+    if exists(PROJECT_FOLDER + '/.git'):
+        # PROJECT_FOLDER로 이동하여 최신 내용으로 업데이트
+        run(f'cd {PROJECT_FOLDER} && git fetch')
+    
+    # .git 파일 없으면 clone로 불러오기
+    else:
+        run(f'git clone {REPO_URL} {PROJECT_FOLDER}')
+
+    # local에서 가장 최근의 commit의 해시 조회
+    current_commit = local("git log -n 1 --format=%H", capture=True)
+
+    # PROJECT_FOLDER의 내용들을 가장 최근의 commit 버전으로 업데이트
+    run(f'cd {PROJECT_FOLDER} && git reset --hard {current_commit}')
+
+# -------------------------------------------------------------------
+# 가상환경 업데이트
+def _update_virtualenv():
+    # 가상환경 폴더 안에 PROJECT_NAME 이름의 폴더 유무 확인
+    VIRTUALENV_FOLDER = PROJECT_FOLDER + f'/../.virtualenvs/{PROJECT_NAME}'
+    
+    # 폴더 존재하지 않는 경우
+    if not exists(VIRTUALENV_FOLDER + '/bin/pip'):
+        # 가상환경 신규로 생성
+        run(f'cd /home/{REMOTE_USER}/.virtualenvs && virtualenv {PROJECT_NAME}')
+    
+    # 가상환경에서 사용할 파이썬 패키지 설치
+    run(f'{VIRTUALENV_FOLDER}/bin/pip install -r {PROJECT_FOLDER}/requirements.txt')
+
+# -------------------------------------------------------------------
